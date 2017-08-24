@@ -1,35 +1,57 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-function Get_FSW_TravelTimes()
+function FSW_Display_TravelTimes()
 {
-	$html .= FSW_Get_Arrival_Table();
-	$html .= '<br>/';
-	$html .= '<br>/';
-	$html .= FSW_Get_Departure_Table();
+	$html .= Get_TravelTimes_Table('Arrivals');
+	$html .= '<br>';
+	$html .= '<br>';
+	$html .= Get_TravelTimes_Table('Departures');
 
 	return $html;
 }
 
-function FSW_Get_Arrival_Table()
+//TableTypes: Arrivals|Departures
+function Get_TravelTimes_Table($TableType)
 {
-	$ArrivalFields = array( 'display_name', 'FSW_ArrivalDate', 'FSW_ArrivalTime', 'FSW_Airline' );
-	$ArrivalOrderbyFields = array( 'FSW_ArrivalDate', 'FSW_ArrivalTime' );
-	$ArrivalFilter = array('order' => 'ASC', $ArrivalOrderbyFields, 'fields' => $ArrivalFields);
+	switch($TableType)
+	{
+		case 'Arrivals':
+			$Filter = Get_TravelTimes_Filter('FSW_ArrivalDate', 'FSW_ArrivalTime');
+			$Caption = 'Arrivals';
+			break;
+
+		case 'Departures':
+			$Filter = Get_TravelTimes_Filter('FSW_DepartureDate', 'FSW_DepartureTime');
+			$Caption = 'Departures';
+			break;
+	}
 	
-	$html .= '<table>';
-	$html .= '<caption>Arrivals</caption>';
+	$html .= '<table class="TravelTimes">';
+	$html .= '<caption>' . $Caption . '</caption>';
 	$html .= '<tr>';
 	$html .= '<th>Name</th>';
 	$html .= '<th>Date</th>';
 	$html .= '<th>Time</th>';
 	$html .= '<th>Airline</th>';
 	$html .= '</tr>';
-	foreach(get_users($ArrivalFilter) as $user)
+	foreach(get_users($Filter) as $user)
 	{
 		$html .= '<tr>';
 		$html .= "<td><a href='http://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
-		$html .= '<td>' . $user->FSW_ArrivalDate . '</td>';
-		$html .= '<td>' . $user->FSW_ArrivalTime . '</td>';
+
+		switch($TableType)
+		{
+			case 'Arrivals':
+				$html .=  '<td>' . $user->FSW_ArrivalDate . '</td>';
+				$html .=  '<td>' . $user->FSW_ArrivalTime . '</td>';
+				break;
+
+			case 'Departures':
+				$html .=  '<td>' . $user->FSW_DepartureDate . '</td>';
+				$html .=  '<td>' . $user->FSW_DepartureTime . '</td>';
+				break;
+		}
+
 		$html .= '<td>' . $user->FSW_Airline . '</td>';
 		$html .= '</tr>';
 	}
@@ -38,32 +60,32 @@ function FSW_Get_Arrival_Table()
 	return $html;
 }
 
-function FSW_Get_Departure_Table()
+function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 {
-	$DepartureFields = array( 'display_name', 'FSW_DepartureDate', 'FSW_DepartureTime', 'FSW_Airline' );
-	$DepartureOrderbyFields = array( 'FSW_DepartureDate', 'FSW_DepartureTime' );
-	$DepartureFilter = array('order' => 'ASC', 'orderby' => $DepartureOrderbyFields, 'fields' => $DepartureFields);
-	
-	$html .= '<table>';
-	$html .= '<caption>Departures</caption>';
-	$html .= '<tr>';
-	$html .= '<th>Name</th>';
-	$html .= '<th>Date</th>';
-	$html .= '<th>Time</th>';
-	$html .= '<th>Airline</th>';
-	$html .= '</tr>';
-	foreach(get_users($DepartureFilter) as $user)
-	{
-		$html .= '<tr>';
-		$html .= "<td><a href='http://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
-		$html .= '<td>' . $user->FSW_DepartureDate . '</td>';
-		$html .= '<td>' . $user->FSW_DepartureTime . '</td>';
-		$html .= '<td>' . $user->FSW_Airline . '</td>';
-		$html .= '</tr>';
-	}
-	$html .= '</table>';
-	
-	return $html;
+	//BUG: sort treats date like txt, so it fails to accurately sort by year
+
+	return array(
+			'meta_query' => array(
+						'relation' => 'AND',
+						array(
+							'key' => 'fsw_status', 
+							'value' => 'Approved - Paid'
+							),
+        					FSW_Date => array(
+            						'key' => $DateFieldName,
+                					'compare' => 'EXISTS'
+        						),
+        					FSW_Time => array(
+            						'key' => $TimeFieldName,
+                					'compare' => 'EXISTS'
+        						)
+						),
+    			'orderby' => array( 
+        					'FSW_Date' => 'ASC',
+        					'FSW_Time' => 'ASC'
+    						)
+			);
 }
+
 //-----------------------------------------------------------------------------------------------------------
 ?>

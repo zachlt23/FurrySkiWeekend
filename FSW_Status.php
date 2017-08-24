@@ -8,6 +8,7 @@ function Get_FSW_UserStatus_Table($userID)
 	$status = get_user_meta($userID, 'fsw_status', true );
 	$house = get_user_meta($userID, 'fsw_house', true );
 	$bed = get_user_meta($userID, 'fsw_bed', true );
+	$roommate = get_user_meta($userID, 'FSW_Roommate', true);
 	$description = Get_FSW_StatusMessage($status);
 	//-----------------------------------------------------------------------------------------------------------
 	if(!Is_FSW_Registration_Open())
@@ -22,6 +23,7 @@ function Get_FSW_UserStatus_Table($userID)
 	$html .= Create_Header_Row('Description', $description);
 	$html .= Create_Header_Row('House', $house);
 	$html .= Create_Header_Row('Bed', $bed);
+	$html .= Create_Header_Row('Roommate(s)', $roommate);
 	$html .= '</table>';
 	//-----------------------------------------------------------------------------------------------------------
 	return $html;
