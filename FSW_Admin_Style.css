@@ -1,0 +1,22 @@
+/*-----------------------------------------------------------------------------------------------------------*/
+.Reset {border: 2px solid black; table-layout: auto; clear: left;}
+.Reset td{border: 2px solid black; text-align: center;}
+.Reset th{border: 2px solid black; text-align: center; background-color: black; color: white;}
+/*-----------------------------------------------------------------------------------------------------------*/
+.pending, .approved, .FSW_Emails, .FSW_Verification
+{
+	border: 2px solid black;
+	margin: 10px 0px 10px 0px;
+	padding: 10px;
+	clear: left;
+	float: left;
+}
+/*-----------------------------------------------------------------------------------------------------------*/
+.FSW_Users {border: 2px solid black;table-layout: auto;}
+.FSW_Users td{border: 2px solid black;text-align: center;table-layout: auto;}
+.FSW_Users th{border: 2px solid black;text-align: center;background-color: black;color: white;}
+.FSW_Users caption{text-align: center;}
+/*-----------------------------------------------------------------------------------------------------------*/
+#FSW_Email_Subject { width: 700px; }
+#FSW_Email_Message_Text { width: 700px; height: 500px;}
+/*-----------------------------------------------------------------------------------------------------------*/
