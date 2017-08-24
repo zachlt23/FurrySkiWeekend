@@ -1,11 +1,20 @@
 /*-----------------------------------------------------------------------------------------------------------*/
-#roommate_table {border: 2px solid black; float: left; text-align: center; table-layout: auto;}
-#roommate_table td{border: 2px solid black; text-align: center;}
-#roommate_table th{border: 2px solid black; text-align: center;}
+#roommate_table { float: left; text-align: center; table-layout: auto;}
+#roommate_table td{ text-align: center;}
+#roommate_table th{ text-align: center;}
+/*-----------------------------------------------------------------------------------------------------------
 #save_prefs {clear: left;}
 /*-----------------------------------------------------------------------------------------------------------*/
 .FSW_Not_Open {text-align: center; background-color: black; color: white; margin: 10px auto; width: 290px;}
-#user_status_table {border: 2px solid black; table-layout: auto; clear: left;}
-#user_status_table td{border: 2px solid black; text-align: center;}
-#user_status_table th{border: 2px solid black; text-align: center; background-color: black; color: white;}
+/*-----------------------------------------------------------------------------------------------------------
+//#user_status_table {border: 2px solid black; table-layout: auto; clear: left;}
+//#user_status_table td{border: 2px solid black; text-align: center;}
+//#user_status_table th{border: 2px solid black; text-align: center; background-color: black; color: white;}
 /*-----------------------------------------------------------------------------------------------------------*/
+.TravelTimes caption { text-align:center; font-weight: bold; text-decoration: underline;}
+/*-----------------------------------------------------------------------------------------------------------*/
+#fsw_housing_table, #fsw_housing_table th, #fsw_housing_table td
+{
+  	text-align: center;
+}
+/*-----------------------------------------------------------------------------------------------------------
