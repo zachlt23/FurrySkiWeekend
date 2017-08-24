@@ -4,15 +4,20 @@ require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_TravelTimes()
 {
+	$html .= FSW_Get_Arrival_Table();
+	$html .= '<br>/';
+	$html .= '<br>/';
+	$html .= FSW_Get_Departure_Table();
+
+	return $html;
+}
+
+function FSW_Get_Arrival_Table()
+{
 	$ArrivalFields = array( 'display_name', 'FSW_ArrivalDate', 'FSW_ArrivalTime', 'FSW_Airline' );
-	$ArrivalOrderybyFields = array( 'FSW_ArrivalDate', 'FSW_ArrivalTime' );
-
-	$DepartureFields = array( 'display_name', 'FSW_DepartureDate', 'FSW_DepartureTime', 'FSW_Airline' );
-	$DepartureOrderybyFields = array( 'FSW_DepartureDate', 'FSW_DepartureTime' );
-
-	$ArrivalFilter = array('order' => 'ASC', $ArrivalOrderybyFields, 'fields' => $ArrivalFields);
-	$DepartureFilter = array('order' => 'ASC', 'orderby' => $DepartureOrderybyFields, 'fields' => $DepartureFields);
-
+	$ArrivalOrderbyFields = array( 'FSW_ArrivalDate', 'FSW_ArrivalTime' );
+	$ArrivalFilter = array('order' => 'ASC', $ArrivalOrderbyFields, 'fields' => $ArrivalFields);
+	
 	$html .= '<table>';
 	$html .= '<caption>Arrivals</caption>';
 	$html .= '<tr>';
@@ -31,9 +36,16 @@ function Get_FSW_TravelTimes()
 		$html .= '</tr>';
 	}
 	$html .= '</table>';
+	
+	return $html;
+}
 
-	$html .= '<br><br>';
-
+function FSW_Get_Departure_Table()
+{
+	$DepartureFields = array( 'display_name', 'FSW_DepartureDate', 'FSW_DepartureTime', 'FSW_Airline' );
+	$DepartureOrderbyFields = array( 'FSW_DepartureDate', 'FSW_DepartureTime' );
+	$DepartureFilter = array('order' => 'ASC', 'orderby' => $DepartureOrderbyFields, 'fields' => $DepartureFields);
+	
 	$html .= '<table>';
 	$html .= '<caption>Departures</caption>';
 	$html .= '<tr>';
@@ -52,7 +64,7 @@ function Get_FSW_TravelTimes()
 		$html .= '</tr>';
 	}
 	$html .= '</table>';
-
+	
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
