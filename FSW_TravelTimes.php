@@ -26,7 +26,7 @@ function Get_TravelTimes_Table($TableType)
 			break;
 	}
 	
-	$html .= '<table>';
+	$html .= '<table class="TravelTimes">';
 	$html .= '<caption>' . $Caption . '</caption>';
 	$html .= '<tr>';
 	$html .= '<th>Name</th>';
