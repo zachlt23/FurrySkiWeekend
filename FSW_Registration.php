@@ -7,7 +7,7 @@ Version: 1.0.0.0
 Author: Zach Thompson
 Author URI: 
 License: GPLv2
-Copyright 2015 Zach Thompson (email: zachlt23@gmail.com)
+Copyright 2017 Zach Thompson (email: zachlt23@gmail.com)
 */
 //-----------------------------------------------------------------------------------------------------------
 register_activation_hook(__FILE__, 'Activate_FSW_Registration');
@@ -20,11 +20,13 @@ add_action('wp_enqueue_scripts', 'FSW_Load_Settings');
 //-----------------------------------------------------------------------------------------------------------
 add_shortcode('FSW_Registration', 'FSW_Display_Registration');
 add_shortcode('FSW_Preferences', 'FSW_Display_Preferences');
+add_shortcode('FSW_TravelTimes', 'FSW_Display_TravelTimes');
 //-----------------------------------------------------------------------------------------------------------
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Admin.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Status.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Preferences.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Methods.php');
+require_once(plugin_dir_path(__FILE__) . 'php/FSW_TravelTimes.php');
 //-----------------------------------------------------------------------------------------------------------
 function Activate_FSW_Registration() { }
 function Uninstall_FSW_Registration() { }
