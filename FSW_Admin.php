@@ -55,7 +55,8 @@ function Get_FSW_Pending_Table()
 	$html .= '<table class="FSW_Users">';
 	$html .= "<caption>Pending Users - $count</caption>";
 	$html .= '<tr>';
-	$html .= Get_Default_User_Fields();
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
 	$html .= '<th>Approve</th>';
 	$html .= '<th>Waitlist</th>';
 	$html .= '<th>Decline</th>';
@@ -78,7 +79,8 @@ function Get_FSW_Approved_Table()
 	$html .= '<table class="FSW_Users">';
 	$html .= "<caption>Approved Users - $count</caption>";
 	$html .= '<tr>';
-	$html .= Get_Default_User_Fields();
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
 	$html .= '<th>Paid</th>';
 	$html .= '<th>Waitlist</th>';
 	$html .= '</tr>';
@@ -99,7 +101,8 @@ function Get_FSW_Housing_Table()
 	$html .= '<table class="FSW_Users">';
 	$html .= "<caption>Paid Users - $count</caption>";
 	$html .= '<tr>';
-	$html .= Get_Default_User_Fields();
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
 	$html .= '<th>House Preference</th>';
 	$html .= '<th>Roommate Preference</th>';
 	$html .= '<th>House</th>';
@@ -123,7 +126,8 @@ function Get_FSW_Waitlist_Table()
 	$html .= '<table class="FSW_Users">';
 	$html .= "<caption>Waitlist - $count</caption>";
 	$html .= '<tr>';
-	$html .= Get_Default_User_Fields();
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
 	$html .= '<th>Approve</th>';
 	$html .= '<th>Decline</th>';
 	$html .= '</tr>';
@@ -144,7 +148,8 @@ function Get_FSW_Refund_Table()
 	$html .= '<table class="FSW_Users">';
 	$html .= "<caption>Requesting Refunds - $count</caption>";
 	$html .= '<tr>';
-	$html .= Get_Default_User_Fields();
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
 	$html .= '<th>Refunded</th>';
 	$html .= '<th>Rescended</th>';
 	$html .= '</tr>';
@@ -156,29 +161,16 @@ function Get_FSW_Refund_Table()
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_Default_User_Fields()
-{
-	$html .= '<th>Display Name</th>';
-	//$html .= '<th>User Login</th>';
-	$html .= '<th>Email</th>';
-	//$html .= '<th>Role</th>';
-	//$html .= '<th>FSW Status</th>';
-	return $html;
-}
-//-----------------------------------------------------------------------------------------------------------
 function Build_FSW_Users($role, $status, $buttonType)
 {
-	//$filter = array('order' => 'ASC', 'orderby' => 'display_name', 'role' => $role, 'meta_key' => 'fsw_status', 'meta_value' => $status);
+	$filter = array('order' => 'ASC', 'orderby' => 'display_name', 'role' => $role, 'meta_key' => 'fsw_status', 'meta_value' => $status);
 
 	foreach(get_users($filter) as $user)
 		if(!in_array($user->ID, array('1','5','7')))
 		{
 			$html .= '<tr>';
 			$html .= "<td><a href='http://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
-			//$html .= '<td>' . $user->user_login . '</td>';
 			$html .= '<td>' . $user->user_email . '</td>';
-			//$html .= '<td>' . $user->roles[0] . '</td>';
-			//$html .= '<td>' . get_user_meta($user->ID, 'fsw_status', true) . '</td>';
 			$html .=  Get_FSW_User_Buttons($buttonType, $user->ID, $user->display_name, $user->user_email);
 			$html .= '</tr>';
 		}
