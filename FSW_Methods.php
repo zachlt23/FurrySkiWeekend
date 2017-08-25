@@ -122,7 +122,21 @@ function Get_FSW_Select($values, $currentValue, $id, $disabled = false)
 //-----------------------------------------------------------------------------------------------------------
 function Get_User_Select()
 {
-	$filter = array('fields' => array('display_name'));
+	$filter = array('fields' => array('display_name'),
+			'meta_query' => array(
+						'relation' => 'OR',
+						array(
+							'key' => 'fsw_status', 
+							'value' => 'Approved - Paid'
+							),
+        					array(
+							'key' => 'fsw_status', 
+							'value' => 'Approved - Payment Required'
+							)
+						)
+			);
+
+
 	$html .= '<select id="select_roommates">';
 	foreach(get_users($filter) as $user)
 		$html .= '<option value="' . $user->display_name . '">' . $user->display_name . '</option>';
