@@ -18,9 +18,9 @@ function Get_FSW_Preferences($userID)
 {
 	$html .= '<form method="post">';
 	$html .= '<div class="pref_div">';
-	$html .= 'Prefered House:<br>';
+	$html .= 'Select Prefered House:<br>';
 	$html .= Get_House_Prefs($userID);
-	$html .= '<br><br>Prefered Roommates:<br>';
+	$html .= '<br><br>Add Prefered Roommate(s):<br>';
 	$html .= Get_User_Select();
 	$html .= '<input type="button" name="add_roommate" id="add_roommate" value="Add" onclick="Add_Roommate()">';
 	$html .= Get_Roommate_Table($userID);
@@ -39,6 +39,7 @@ function Get_Roommate_Table($userID)
 	$roomates = get_user_meta($userID, 'fsw_roommates', true);
 
 	$html .= '<table id="roommate_table">';
+	$html .= '<caption>Prefered Roommates</caption>';
 	foreach(explode(",", $roomates ) as $item)
 	{
 		if($item != '')

@@ -1,7 +1,8 @@
 /*-----------------------------------------------------------------------------------------------------------*/
 #roommate_table { float: left; text-align: center; table-layout: auto;}
-#roommate_table td{ text-align: center;}
-#roommate_table th{ text-align: center;}
+#roommate_table td { text-align: center;}
+#roommate_table th { text-align: center;}
+#roommate_table caption { text-align: center; font-weight: bold; text-decoration: underline; }
 /*-----------------------------------------------------------------------------------------------------------
 #save_prefs {clear: left;}
 /*-----------------------------------------------------------------------------------------------------------*/
