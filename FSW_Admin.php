@@ -322,19 +322,19 @@ function Send_Questionnaire()
 				</p>
 				<ul style='list-style-type:disc'>
   					<li>Why do you want to attend FSW?</li>
+					<li>Tell us a little bit about yourself.</li>
 					<li>Will you be at least 21 years old by the first day of FSW?</li>
-  					<li>Who do you know who is attending this year, or has attended in past years?</li>
-					<li>Do you know how to ski or snowboard?</li>
-					<li>Do you plan on skiing or snowboarding during FSW?</li>
+  					<li>Who do you know who is attending this year or who has attended in past years?</li>
+					<li>Do you ski, snowboard, both, or neither?</li>
+					<li>Have you applied or attended in past years?</li>
 					<li>Do you have a fursuit?</li>
-					<li>Will you be staying in one of the FSW houses, or are you looking to stay offsite?</li>
-					<li>Will you be looking to attend the entire event, or just a single day?</li>
-					<li>Will you be willing to assist with small task around the event?</li>
-					<li>If qualified, would you be interested in taking video or pics during the event that we could use?</li>
-					<li>If qualified, would you be interested in teaching other how to ski or snowboard?</li>
+					<li>Do you want to attend the entire event, or just a single day?</li>
+					<li>Are you willing to assist with small tasks around the event?</li>
+					<li>Are you interested in taking video/pictures during the event for our use?</li>
+					<li>Are you interested in teaching other how to ski/snowboard?</li>
 					<li>Is there anyone attending who you have had negative experiences with or do not like?</li>
 					<li>Have you read through the About section? (http://furryskiweekend.com/about/)</li>
-					<li>Will you be renting a vehicle, or will you need transportation to FSW?</li>
+					<li>Are you renting a vehicle, or will you need transportation to FSW?</li>
 					<li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
 					<li>Recreational cannabis is legal in CO. Would its isolated use bother you?</li>
 				</ul>
