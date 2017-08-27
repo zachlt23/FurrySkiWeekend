@@ -60,7 +60,7 @@ function Get_FSW_Pending_Table()
 	$html .= '<th>Approve</th>';
 	$html .= '<th>Waitlist</th>';
 	$html .= '<th>Decline</th>';
-	$html .= '<th>Send Questionaire</th>';
+	$html .= '<th>Send Questionnaire</th>';
 	$html .= '</tr>';
 	$html .= Build_FSW_Users('subscriber', $status, 'p');
 	$html .= '</table>';
@@ -151,7 +151,7 @@ function Get_FSW_Refund_Table()
 	$html .= '<th>Display Name</th>';
 	$html .= '<th>Email</th>';
 	$html .= '<th>Refunded</th>';
-	$html .= '<th>Rescended</th>';
+	$html .= '<th>Rescinded</th>';
 	$html .= '</tr>';
 	$html .= Build_FSW_Users('subscriber', $status, 'r');
 	$html .= '</table>';
@@ -218,7 +218,7 @@ function Get_FSW_Pending_Buttons($parameters, $userID)
 	$html .= Get_FSW_Status_Button('Decline', $parameters);
 
 	if(get_user_meta($userID, 'fsw_qsent', true ) != 'true')
-		$html .= '<td><input type="submit" name="questionaire" value="Send" onclick="Update_FSW_Hidden(' . $parameters . ')"/></td>';
+		$html .= '<td><input type="submit" name="questionnaire" value="Send" onclick="Update_FSW_Hidden(' . $parameters . ')"/></td>';
 	else
 		$html .= '<td>Sent</td>';
 
@@ -254,7 +254,7 @@ function Get_FSW_Approved_Buttons($parameters)
 function Get_FSW_Refund_Buttons($parameters)
 {
 	$html .= Get_FSW_Status_Button('Refunded', $parameters);
-	$html .= Get_FSW_Status_Button('Rescended', $parameters);
+	$html .= Get_FSW_Status_Button('Rescinded', $parameters);
 	return $html;
 }
 
@@ -428,7 +428,7 @@ function Update_FSW_Status()
 		case "Refunded":
 			update_user_meta($userID, 'fsw_status', 'Not Registered');
 			break;
-		case "Rescended":
+		case "Rescinded":
 			update_user_meta($userID, 'fsw_status', 'Approved - Paid');
 			break;
 	}
@@ -452,7 +452,7 @@ function Get_FSW_Email_Message($userID, $displayName, $type)
 	//-----------------------------------------------------------------------------------------------------------
 	$message .= 'User: ' . $displayName . "\r\n";
 	$message .= 'New Status: ' . $newStatus . "\r\n";
-	$message .= 'Discription: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
+	$message .= 'Description: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
 	//-----------------------------------------------------------------------------------------------------------
 	if($type == "Update")
 	{

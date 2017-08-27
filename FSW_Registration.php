@@ -148,7 +148,7 @@ if(isset($_REQUEST['preferences']))
 	Set_FSW_Preferences();
 }
 
-if(isset($_REQUEST['questionaire']))
+if(isset($_REQUEST['questionnaire']))
 {	
 	Send_Questionnaire();
 }
