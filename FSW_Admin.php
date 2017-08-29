@@ -322,6 +322,7 @@ function Send_Questionnaire()
 				</p>
 				<ul style='list-style-type:disc'>
   					<li>Why do you want to attend FSW?</li>
+	
 					<li>Tell us a little bit about yourself.</li>
 					<li>Will you be at least 21 years old by the first day of FSW?</li>
   					<li>Who do you know who is attending this year or who has attended in past years?</li>
@@ -479,6 +480,11 @@ function Reset_FSW_Registration_Status()
 		update_user_meta($user->ID, 'fsw_house', 'None');
 		update_user_meta($user->ID, 'fsw_bed', 'None');
 		update_user_meta($user->ID, 'fsw_qsent', '');
+		update_user_meta($user->ID, 'FSW_ArrivalDate', '');
+		update_user_meta($user->ID, 'FSW_ArrivalTime', 'None');
+		update_user_meta($user->ID, 'FSW_DepartureDate', '');
+		update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
+		update_user_meta($user->ID, 'FSW_Airline', '');
 	}
 	//-----------------------------------------------------------------------------------------------------------
 }
