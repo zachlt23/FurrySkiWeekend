@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Display_TravelTimes()
 {
+	$html .= Get_Travel_Control()
 	$html .= Get_TravelTimes_Table('Arrivals');
 	$html .= '<br>';
 	$html .= '<br>';
@@ -9,7 +10,7 @@ function FSW_Display_TravelTimes()
 
 	return $html;
 }
-
+//-----------------------------------------------------------------------------------------------------------
 //TableTypes: Arrivals|Departures
 function Get_TravelTimes_Table($TableType)
 {
@@ -59,7 +60,7 @@ function Get_TravelTimes_Table($TableType)
 	
 	return $html;
 }
-
+//-----------------------------------------------------------------------------------------------------------
 function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 {
 	//BUG: sort treats date like txt, so it fails to accurately sort by year
@@ -86,6 +87,55 @@ function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
     						)
 			);
 }
+//-----------------------------------------------------------------------------------------------------------
+function Set_Travel_Values()
+{
+	//---------------------------
+	$arrivalTime = base64_decode($_REQUEST['at']);
+	$arrivalDate = base64_decode($_REQUEST['ad']);
+	$departureTime = base64_decode($_REQUEST['dt']);
+	$departureDate = base64_decode($_REQUEST['dd']);
+	$airline = base64_decode($_REQUEST['a']);
+	$userID = base64_decode($_REQUEST['i']);
+	//---------------------------
+	update_user_meta($userID, 'fsw_roommates', $roommates);
+	//---------------------------
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_Travel_Control()
+{
+	//---------------------------
+	$arrivalTime = get_user_meta($userID, 'FSW_ArrivalTime', true );
+	$arrivalDate = get_user_meta($userID, 'FSW_ArrivalDate', true );
+	$departureTime = get_user_meta($userID, 'FSW_DepartureTime', true );
+	$departureDate = get_user_meta($userID, 'FSW_DepartureDate', true );
+	$airline = get_user_meta($userID, 'FSW_Airline', true );
+	$userId = wp_get_current_user()->ID;
+	//---------------------------
+	$html .= '<form method="post">';
+	//---------------------------
+	$html .= '<table id="travel_input">';
 
+	$html .= Create_Header_Row("Arrival Date",'<input type="date" name="travel_arrival_date" value=$arrivalDate>'); 
+	$html .= Create_Header_Row("Arrival Time", Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime));
+	$html .= Create_Header_Row("Departure Date",'<input type="date" name="travel_departure_date" value=$departureDate>'); 
+	$html .= Create_Header_Row("Departure Time", Get_MilitaryTime_Select("travel_departure_mTime", $departureTime));
+	$html .= Create_Header_Row("Airline", '<input type="text" name="travel_airline" value=$airline>');
+
+	$html .= '</table>';
+	//---------------------------
+	$html .= '<input type="submit" name="travel" id="save_travel" value="Save" onclick="Set_Travel()"/>';
+	$html .= '<input type="hidden" name="at" id="arrival_time" value="">';
+	$html .= '<input type="hidden" name="ad" id="arrival_date" value="">';
+	$html .= '<input type="hidden" name="dt" id="departure_time" value="">';
+	$html .= '<input type="hidden" name="dd" id="departure_date" value="">';
+	$html .= '<input type="hidden" name="a" id="airline" value="">';
+	$html .= '<input type="hidden" name="i" id="travel_id" value="' . base64_encode($userId) . '">';
+	//---------------------------
+	$html .= '</form>';
+	//---------------------------
+	return $html;
+	//---------------------------
+}
 //-----------------------------------------------------------------------------------------------------------
 ?>

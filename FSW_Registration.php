@@ -167,5 +167,10 @@ if(isset($_REQUEST['FSW_Verification']))
 {
 	Send_FSW_Verification();
 }
+
+if(isset($_REQUEST['save_travel']))
+{
+	Set_Travel_Values();
+}
 //-----------------------------------------------------------------------------------------------------------
 ?>

@@ -5,6 +5,7 @@
 #roommate_table caption { text-align: center; font-weight: bold; text-decoration: underline; }
 /*-----------------------------------------------------------------------------------------------------------
 #save_prefs {clear: left;}
+#travel_input {table-layout: auto; clear: left;}
 /*-----------------------------------------------------------------------------------------------------------*/
 .FSW_Not_Open {text-align: center; background-color: black; color: white; margin: 10px auto; width: 290px;}
 /*-----------------------------------------------------------------------------------------------------------
