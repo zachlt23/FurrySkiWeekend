@@ -205,16 +205,17 @@ function Get_FSW_StatusMessage($status)
 function Get_MilitaryTime_Select($id, $selectedValue)
 {
 	
-	$html .= "<select id=$id>";
+	$html .= '<select id=$id>';
 
 	for($i = 0; $i <= 24; $i++)
 	{
 		for($j = 0; $j < 60; $j+=15)
 		{
-			$value = "sprintf("%02d", $i):sprintf("%02d", $j)";
+			$value = sprintf("%02d", $i) . ':' . sprintf("%02d", $j);
 			if($value == $selectedValue)
-				$selected = true;
-			$html .= "<option value=$value selected=$selected>$user->display_name</option>";
+				$html .= "<option value=$value selected>$value</option>";
+			else
+				$html .= "<option value=$value>$value</option>";
 		}
 	}
 

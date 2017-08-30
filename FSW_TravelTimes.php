@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Display_TravelTimes()
 {
-	$html .= Get_Travel_Control()
+	$html .= Get_Travel_Control();
 	$html .= Get_TravelTimes_Table('Arrivals');
 	$html .= '<br>';
 	$html .= '<br>';
@@ -90,6 +90,7 @@ function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 //-----------------------------------------------------------------------------------------------------------
 function Set_Travel_Values()
 {
+/*
 	//---------------------------
 	$arrivalTime = base64_decode($_REQUEST['at']);
 	$arrivalDate = base64_decode($_REQUEST['ad']);
@@ -100,31 +101,50 @@ function Set_Travel_Values()
 	//---------------------------
 	update_user_meta($userID, 'fsw_roommates', $roommates);
 	//---------------------------
+*/
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Travel_Control()
 {
 	//---------------------------
-	$arrivalTime = get_user_meta($userID, 'FSW_ArrivalTime', true );
-	$arrivalDate = get_user_meta($userID, 'FSW_ArrivalDate', true );
-	$departureTime = get_user_meta($userID, 'FSW_DepartureTime', true );
-	$departureDate = get_user_meta($userID, 'FSW_DepartureDate', true );
-	$airline = get_user_meta($userID, 'FSW_Airline', true );
 	$userId = wp_get_current_user()->ID;
+	$arrivalTime = get_user_meta($userId, 'FSW_ArrivalTime', true );
+	$arrivalDate = get_user_meta($userId, 'FSW_ArrivalDate', true );
+	$departureTime = get_user_meta($userId, 'FSW_DepartureTime', true );
+	$departureDate = get_user_meta($userId, 'FSW_DepartureDate', true );
+	$airline = get_user_meta($userId, 'FSW_Airline', true );
+	//---------------------------
+	$arrivalDate = Get_Converted_Date($arrivalDate);
+	$departureDate = Get_Converted_Date($departureDate);
 	//---------------------------
 	$html .= '<form method="post">';
 	//---------------------------
 	$html .= '<table id="travel_input">';
 
-	$html .= Create_Header_Row("Arrival Date",'<input type="date" name="travel_arrival_date" value=$arrivalDate>'); 
-	$html .= Create_Header_Row("Arrival Time", Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime));
-	$html .= Create_Header_Row("Departure Date",'<input type="date" name="travel_departure_date" value=$departureDate>'); 
-	$html .= Create_Header_Row("Departure Time", Get_MilitaryTime_Select("travel_departure_mTime", $departureTime));
-	$html .= Create_Header_Row("Airline", '<input type="text" name="travel_airline" value=$airline>');
+/*
+	$html .= Create_Header_Row("UserId", $userId);
+	$html .= Create_Header_Row("Arrival Date", $arrivalDate);
+	$html .= Create_Header_Row("Arrival Time", $arrivalTime);
+	$html .= Create_Header_Row("Departure Date", $departureDate);
+	$html .= Create_Header_Row("Departure Time", $departureTime);
+	$html .= Create_Header_Row("Airline", $airline);
+*/	
+
+	$InputArrivalDate = '<input type="date" name="travel_arrival_date" value=' . $arrivalDate . '>';
+	$InputDepartureDate = '<input type="date" name="travel_departure_date" value="' . $departureDate . '">';
+	$ArrivalTimeSelect = Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime);
+	$DepartureTimeSelect = Get_MilitaryTime_Select("travel_departure_mTime", $departureTime);
+	$InputAirline = '<input type="text" name="travel_airline" value=' . $airline . '>';
+
+	$html .= Create_Header_Row("Arrival Date", $InputArrivalDate); 
+	$html .= Create_Header_Row("Arrival Time", $ArrivalTimeSelect);
+	$html .= Create_Header_Row("Departure Date", $InputDepartureDate); 
+	$html .= Create_Header_Row("Departure Time", $DepartureTimeSelect);
+	$html .= Create_Header_Row("Airline", $InputAirline);
 
 	$html .= '</table>';
 	//---------------------------
-	$html .= '<input type="submit" name="travel" id="save_travel" value="Save" onclick="Set_Travel()"/>';
+	$html .= '<input type="submit" name="travel" id="save_travel" value="Save Travel Info" onclick="Set_Travel()"/>';
 	$html .= '<input type="hidden" name="at" id="arrival_time" value="">';
 	$html .= '<input type="hidden" name="ad" id="arrival_date" value="">';
 	$html .= '<input type="hidden" name="dt" id="departure_time" value="">';
@@ -133,9 +153,20 @@ function Get_Travel_Control()
 	$html .= '<input type="hidden" name="i" id="travel_id" value="' . base64_encode($userId) . '">';
 	//---------------------------
 	$html .= '</form>';
+	$html .= '<br/>';
 	//---------------------------
 	return $html;
 	//---------------------------
+}
+//-----------------------------------------------------------------------------------------------------------
+//Input: 02/21/2018
+//Output: 2018-02-21
+function Get_Converted_Date($date)
+{
+	if(strlen($date) == 10)
+		return substr($date, -4, 4) . "-" . substr($date, 0, 2) . "-" . substr($date, 3, 2);
+
+	return $date;
 }
 //-----------------------------------------------------------------------------------------------------------
 ?>
