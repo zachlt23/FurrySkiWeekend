@@ -99,8 +99,8 @@ function Set_Travel_Values()
 	//$airline = base64_decode($_REQUEST['a']);
 	$userID = base64_decode($_REQUEST['i']);
 	//---------------------------
-	//update_user_meta($userID, 'FSW_ArrivalTime', $_REQUEST['at']);
-	update_user_meta($userID, 'FSW_ArrivalDate', Get_UPME_Date($_REQUEST['ad']));
+	update_user_meta($userID, 'FSW_ArrivalTime', $_REQUEST['at']);
+	//update_user_meta($userID, 'FSW_ArrivalDate', Get_UPME_Date($_REQUEST['ad']));
 	//update_user_meta($userID, 'FSW_DepartureTime', $_REQUEST['dt']);
 	//update_user_meta($userID, 'FSW_DepartureDate', Get_UPME_Date($_REQUEST['dd']));
 	//update_user_meta($userID, 'FSW_Airline', $_REQUEST['a']);
@@ -126,7 +126,7 @@ function Get_Travel_Control()
 
 	$InputArrivalDate = '<input type="date" name="ad" id="travel_arrival_date" value=' . $arrivalDate . '>';
 	$InputDepartureDate = '<input type="date" name="dd" id="travel_departure_date" value="' . $departureDate . '">';
-	$InputAirline = '<input type="text" name="a" id="travel_airline" value=' . $airline . '>';
+	$InputAirline = Get_Airline_Select($userId);
 	$ArrivalTimeSelect = Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime);
 	$DepartureTimeSelect = Get_MilitaryTime_Select("travel_departure_mTime", $departureTime);
 
@@ -138,9 +138,10 @@ function Get_Travel_Control()
 
 	$html .= '</table>';
 	//---------------------------
-	$html .= '<input type="submit" name="travel" id="save_travel" value="Save Travel Info" onclick="FSW_Update_Travel()"/>';
+	$html .= '<input type="submit" name="save_travel" id="save_travel" value="Save" onclick="FSW_Update_Travel()"/>';
 	$html .= '<input type="hidden" name="at" id="arrival_time" value="">';
 	$html .= '<input type="hidden" name="dt" id="departure_time" value="">';
+	$html .= '<input type="hidden" name="a" id="airline" value="">';
 	$html .= '<input type="hidden" name="i" id="travel_id" value="' . base64_encode($userId) . '">';
 	//---------------------------
 	$html .= '</form>';

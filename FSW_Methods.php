@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------------------------------------------
 $FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Legends 10', 'Legends 11', 'Woods 36', 'Woods 15', 'The Complex', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
-$FSW_Airlines = array('Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
+$FSW_Airlines = array('None', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Registration_Year()
 {
@@ -108,7 +108,7 @@ function Get_Houses($userID, $disabled = false)
 function Get_Airline_Select($userID, $disabled = false)
 {
 	$airline = get_user_meta($userID, 'FSW_Airline', true);
-	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, travel_airline, 'a', $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline' , $disabled);
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Beds($userID, $disabled = false)
@@ -120,9 +120,14 @@ function Get_Beds($userID, $disabled = false)
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 {
-	$html .= '<select id="' . $id . '"' . ($disabled ? "disabled" : "") . '>';
+	$html .= '<select id=' . $id . ' name=' . $name . ' ' . ($disabled ? "disabled" : "") . '>';
+
 	foreach($values as $value)
-		$html .= '<option value="' . $value . '" ' . (($currentValue == $value) ? "selected" : "") . '>' . $value . '</option>';
+	{
+		$selected = ($currentValue == $value) ? "selected" : "";
+		$html .= '<option value="' . $value . '" ' . $selected . '>' . $value . '</option>';
+	}
+	
 	$html .= '</select>';
 	return $html;
 }
@@ -209,9 +214,8 @@ function Get_FSW_StatusMessage($status)
 	//-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_MilitaryTime_Select($id, $selectedValue)
+function Get_MilitaryTime_Select($id, $currentValue)
 {
-	
 	$html .= '<select id=' . $id . '>';
 
 	for($i = 0; $i <= 24; $i++)
@@ -219,10 +223,7 @@ function Get_MilitaryTime_Select($id, $selectedValue)
 		for($j = 0; $j < 60; $j+=15)
 		{
 			$value = sprintf("%02d", $i) . ':' . sprintf("%02d", $j);
-			if($value == $selectedValue)
-				$html .= "<option value=$value selected>$value</option>";
-			else
-				$html .= "<option value=$value>$value</option>";
+			$html .= '<option value="' . $value . '" ' . (($currentValue == $value) ? "selected" : "") . '>' . $value . '</option>';
 		}
 	}
 
