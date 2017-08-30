@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------------------------------------------
 $FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Legends 10', 'Legends 11', 'Woods 36', 'Woods 15', 'The Complex', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
+$FSW_Airlines = array('Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Registration_Year()
 {
@@ -94,24 +95,30 @@ function Create_Header_Row($name, $value)
 function Get_House_Prefs($userID, $disabled = false)
 {
 	$house = get_user_meta($userID, 'fsw_house_preference', true);
-	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , 'select_house_pref', $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , 'select_house_pref', 'house_pref', $disabled);
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Houses($userID, $disabled = false)
 {
 	$id = 'select_house_' . $userID;
 	$house = get_user_meta($userID, 'fsw_house', true);
-	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , $id, $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , $id, 'houses', $disabled);
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_Airline_Select($userID, $disabled = false)
+{
+	$airline = get_user_meta($userID, 'FSW_Airline', true);
+	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, travel_airline, 'a', $disabled);
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Beds($userID, $disabled = false)
 {
 	$id = 'select_bed_' . $userID;
 	$bed = get_user_meta($userID, 'fsw_bed', true);
-	return Get_FSW_Select($GLOBALS['FSW_Beds'], $bed, $id, $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Beds'], $bed, $id, 'beds', $disabled);
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_FSW_Select($values, $currentValue, $id, $disabled = false)
+function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 {
 	$html .= '<select id="' . $id . '"' . ($disabled ? "disabled" : "") . '>';
 	foreach($values as $value)
@@ -205,7 +212,7 @@ function Get_FSW_StatusMessage($status)
 function Get_MilitaryTime_Select($id, $selectedValue)
 {
 	
-	$html .= '<select id=$id>';
+	$html .= '<select id=' . $id . '>';
 
 	for($i = 0; $i <= 24; $i++)
 	{

@@ -90,18 +90,21 @@ function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 //-----------------------------------------------------------------------------------------------------------
 function Set_Travel_Values()
 {
-/*
 	//---------------------------
-	$arrivalTime = base64_decode($_REQUEST['at']);
-	$arrivalDate = base64_decode($_REQUEST['ad']);
-	$departureTime = base64_decode($_REQUEST['dt']);
-	$departureDate = base64_decode($_REQUEST['dd']);
-	$airline = base64_decode($_REQUEST['a']);
+	//$userId = wp_get_current_user()->ID;
+	//$arrivalTime = base64_decode($_REQUEST['at']);
+	//$arrivalDate = base64_decode($_REQUEST['ad']);
+	//$departureTime = base64_decode($_REQUEST['dt']);
+	//$departureDate = base64_decode($_REQUEST['dd']);
+	//$airline = base64_decode($_REQUEST['a']);
 	$userID = base64_decode($_REQUEST['i']);
 	//---------------------------
-	update_user_meta($userID, 'fsw_roommates', $roommates);
+	//update_user_meta($userID, 'FSW_ArrivalTime', $_REQUEST['at']);
+	update_user_meta($userID, 'FSW_ArrivalDate', Get_UPME_Date($_REQUEST['ad']));
+	//update_user_meta($userID, 'FSW_DepartureTime', $_REQUEST['dt']);
+	//update_user_meta($userID, 'FSW_DepartureDate', Get_UPME_Date($_REQUEST['dd']));
+	//update_user_meta($userID, 'FSW_Airline', $_REQUEST['a']);
 	//---------------------------
-*/
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Travel_Control()
@@ -121,20 +124,11 @@ function Get_Travel_Control()
 	//---------------------------
 	$html .= '<table id="travel_input">';
 
-/*
-	$html .= Create_Header_Row("UserId", $userId);
-	$html .= Create_Header_Row("Arrival Date", $arrivalDate);
-	$html .= Create_Header_Row("Arrival Time", $arrivalTime);
-	$html .= Create_Header_Row("Departure Date", $departureDate);
-	$html .= Create_Header_Row("Departure Time", $departureTime);
-	$html .= Create_Header_Row("Airline", $airline);
-*/	
-
-	$InputArrivalDate = '<input type="date" name="travel_arrival_date" value=' . $arrivalDate . '>';
-	$InputDepartureDate = '<input type="date" name="travel_departure_date" value="' . $departureDate . '">';
+	$InputArrivalDate = '<input type="date" name="ad" id="travel_arrival_date" value=' . $arrivalDate . '>';
+	$InputDepartureDate = '<input type="date" name="dd" id="travel_departure_date" value="' . $departureDate . '">';
+	$InputAirline = '<input type="text" name="a" id="travel_airline" value=' . $airline . '>';
 	$ArrivalTimeSelect = Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime);
 	$DepartureTimeSelect = Get_MilitaryTime_Select("travel_departure_mTime", $departureTime);
-	$InputAirline = '<input type="text" name="travel_airline" value=' . $airline . '>';
 
 	$html .= Create_Header_Row("Arrival Date", $InputArrivalDate); 
 	$html .= Create_Header_Row("Arrival Time", $ArrivalTimeSelect);
@@ -144,12 +138,9 @@ function Get_Travel_Control()
 
 	$html .= '</table>';
 	//---------------------------
-	$html .= '<input type="submit" name="travel" id="save_travel" value="Save Travel Info" onclick="Set_Travel()"/>';
+	$html .= '<input type="submit" name="travel" id="save_travel" value="Save Travel Info" onclick="FSW_Update_Travel()"/>';
 	$html .= '<input type="hidden" name="at" id="arrival_time" value="">';
-	$html .= '<input type="hidden" name="ad" id="arrival_date" value="">';
 	$html .= '<input type="hidden" name="dt" id="departure_time" value="">';
-	$html .= '<input type="hidden" name="dd" id="departure_date" value="">';
-	$html .= '<input type="hidden" name="a" id="airline" value="">';
 	$html .= '<input type="hidden" name="i" id="travel_id" value="' . base64_encode($userId) . '">';
 	//---------------------------
 	$html .= '</form>';
@@ -165,6 +156,16 @@ function Get_Converted_Date($date)
 {
 	if(strlen($date) == 10)
 		return substr($date, -4, 4) . "-" . substr($date, 0, 2) . "-" . substr($date, 3, 2);
+
+	return $date;
+}
+//-----------------------------------------------------------------------------------------------------------
+//Input: 2018-02-21
+//Output: 02/21/2018
+function Get_UPME_Date($date)
+{
+	if(strlen($date) == 10)
+		return substr($date, 5, 2) . "/" . substr($date, 8, 2) . "/" . substr($date, 0, 4);
 
 	return $date;
 }
