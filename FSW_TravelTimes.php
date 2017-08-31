@@ -100,10 +100,10 @@ function Set_Travel_Values()
 	$userID = base64_decode($_REQUEST['i']);
 	//---------------------------
 	update_user_meta($userID, 'FSW_ArrivalTime', $_REQUEST['at']);
-	//update_user_meta($userID, 'FSW_ArrivalDate', Get_UPME_Date($_REQUEST['ad']));
-	//update_user_meta($userID, 'FSW_DepartureTime', $_REQUEST['dt']);
-	//update_user_meta($userID, 'FSW_DepartureDate', Get_UPME_Date($_REQUEST['dd']));
-	//update_user_meta($userID, 'FSW_Airline', $_REQUEST['a']);
+	update_user_meta($userID, 'FSW_ArrivalDate', $_REQUEST['ad']);
+	update_user_meta($userID, 'FSW_DepartureTime', $_REQUEST['dt']);
+	update_user_meta($userID, 'FSW_DepartureDate', $_REQUEST['dd']);
+	update_user_meta($userID, 'FSW_Airline', $_REQUEST['a']);
 	//---------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
@@ -117,8 +117,8 @@ function Get_Travel_Control()
 	$departureDate = get_user_meta($userId, 'FSW_DepartureDate', true );
 	$airline = get_user_meta($userId, 'FSW_Airline', true );
 	//---------------------------
-	$arrivalDate = Get_Converted_Date($arrivalDate);
-	$departureDate = Get_Converted_Date($departureDate);
+	//$arrivalDate = Get_Converted_Date($arrivalDate);
+	//$departureDate = Get_Converted_Date($departureDate);
 	//---------------------------
 	$html .= '<form method="post">';
 	//---------------------------
@@ -139,9 +139,9 @@ function Get_Travel_Control()
 	$html .= '</table>';
 	//---------------------------
 	$html .= '<input type="submit" name="save_travel" id="save_travel" value="Save" onclick="FSW_Update_Travel()"/>';
-	$html .= '<input type="hidden" name="at" id="arrival_time" value="">';
-	$html .= '<input type="hidden" name="dt" id="departure_time" value="">';
-	$html .= '<input type="hidden" name="a" id="airline" value="">';
+	$html .= '<input type="hidden" name="at" id="hidden_arrival_time" value="">';
+	$html .= '<input type="hidden" name="dt" id="hidden_departure_time" value="">';
+	$html .= '<input type="hidden" name="a" id="hidden_airline" value="">';
 	$html .= '<input type="hidden" name="i" id="travel_id" value="' . base64_encode($userId) . '">';
 	//---------------------------
 	$html .= '</form>';

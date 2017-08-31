@@ -54,3 +54,16 @@ function Set_Preferences()
 	//-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
+function FSW_Update_Travel()
+{
+	//-----------------------------------------------------------------------------------------------------------
+	var arrivalTime = document.getElementById('travel_arrival_mTime').value;
+	var departureTime = document.getElementById('travel_departure_mTime').value;
+	var airline = document.getElementById('travel_airline_select').value;
+	//-----------------------------------------------------------------------------------------------------------
+	document.getElementById('hidden_arrival_time').value = arrivalTime;
+	document.getElementById('hidden_departure_time').value = departureTime;
+	document.getElementById('hidden_airline').value = airline;
+	//-----------------------------------------------------------------------------------------------------------
+}
+//-----------------------------------------------------------------------------------------------------------
