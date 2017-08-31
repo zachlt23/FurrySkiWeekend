@@ -63,8 +63,6 @@ function Get_TravelTimes_Table($TableType)
 //-----------------------------------------------------------------------------------------------------------
 function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 {
-	//BUG: sort treats date like txt, so it fails to accurately sort by year
-
 	return array(
 			'meta_query' => array(
 						'relation' => 'AND',
@@ -91,12 +89,6 @@ function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 function Set_Travel_Values()
 {
 	//---------------------------
-	//$userId = wp_get_current_user()->ID;
-	//$arrivalTime = base64_decode($_REQUEST['at']);
-	//$arrivalDate = base64_decode($_REQUEST['ad']);
-	//$departureTime = base64_decode($_REQUEST['dt']);
-	//$departureDate = base64_decode($_REQUEST['dd']);
-	//$airline = base64_decode($_REQUEST['a']);
 	$userID = base64_decode($_REQUEST['i']);
 	//---------------------------
 	update_user_meta($userID, 'FSW_ArrivalTime', $_REQUEST['at']);
@@ -116,9 +108,6 @@ function Get_Travel_Control()
 	$departureTime = get_user_meta($userId, 'FSW_DepartureTime', true );
 	$departureDate = get_user_meta($userId, 'FSW_DepartureDate', true );
 	$airline = get_user_meta($userId, 'FSW_Airline', true );
-	//---------------------------
-	//$arrivalDate = Get_Converted_Date($arrivalDate);
-	//$departureDate = Get_Converted_Date($departureDate);
 	//---------------------------
 	$html .= '<form method="post">';
 	//---------------------------
@@ -149,26 +138,6 @@ function Get_Travel_Control()
 	//---------------------------
 	return $html;
 	//---------------------------
-}
-//-----------------------------------------------------------------------------------------------------------
-//Input: 02/21/2018
-//Output: 2018-02-21
-function Get_Converted_Date($date)
-{
-	if(strlen($date) == 10)
-		return substr($date, -4, 4) . "-" . substr($date, 0, 2) . "-" . substr($date, 3, 2);
-
-	return $date;
-}
-//-----------------------------------------------------------------------------------------------------------
-//Input: 2018-02-21
-//Output: 02/21/2018
-function Get_UPME_Date($date)
-{
-	if(strlen($date) == 10)
-		return substr($date, 5, 2) . "/" . substr($date, 8, 2) . "/" . substr($date, 0, 4);
-
-	return $date;
 }
 //-----------------------------------------------------------------------------------------------------------
 ?>
