@@ -60,6 +60,13 @@ function FSW_Update_Travel()
 	var arrivalTime = document.getElementById('travel_arrival_mTime').value;
 	var departureTime = document.getElementById('travel_departure_mTime').value;
 	var airline = document.getElementById('travel_airline_select').value;
+	var arrivalDate = document.getElementById('travel_arrival_date').value;
+	var departureDate = document.getElementById('travel_departure_date').value;
+	//-----------------------------------------------------------------------------------------------------------
+	if(!Validate_Date(arrivalDate))
+		document.getElementById('travel_arrival_date').value = "";
+	if(!Validate_Date(departureDate))
+		document.getElementById('travel_departure_date').value = "";
 	//-----------------------------------------------------------------------------------------------------------
 	document.getElementById('hidden_arrival_time').value = arrivalTime;
 	document.getElementById('hidden_departure_time').value = departureTime;
@@ -67,3 +74,25 @@ function FSW_Update_Travel()
 	//-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
+function Validate_Date(date)
+{
+	if(date.length != 10)
+		return false;
+	
+	var dateSplit = date.split('-');
+
+	if(dateSplit.length != 3)
+		return false;
+
+	if(dateSplit[0].length != 4)
+		return false
+
+	var year = parseInt(dateSplit[0]);
+	var month = parseInt(dateSplit[1]);
+	var day = parseInt(dateSplit[2]);
+	
+	if(isNaN(year) || isNaN(month) || isNaN(day))
+		return false;
+
+	return ((month >= 1 && month <= 12) && (day >= 1 && day <= 31));	
+}

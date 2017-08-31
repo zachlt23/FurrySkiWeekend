@@ -122,8 +122,8 @@ function Get_Travel_Control()
 	//---------------------------
 	$html .= '<table id="travel_input">';
 
-	$InputArrivalDate = '<input type="date" name="ad" id="travel_arrival_date" value=' . $arrivalDate . '>';
-	$InputDepartureDate = '<input type="date" name="dd" id="travel_departure_date" value="' . $departureDate . '">';
+	$InputArrivalDate = '<input type="date" placeholder="YYYY-MM-DD" maxlength=10 name="ad" id="travel_arrival_date" value=' . $arrivalDate . '>';
+	$InputDepartureDate = '<input type="date" placeholder="YYYY-MM-DD" maxlength=10 name="dd" id="travel_departure_date" value="' . $departureDate . '">';
 	$InputAirline = Get_Airline_Select($userId);
 	$ArrivalTimeSelect = Get_MilitaryTime_Select("travel_arrival_mTime", $arrivalTime);
 	$DepartureTimeSelect = Get_MilitaryTime_Select("travel_departure_mTime", $departureTime);
