@@ -37,6 +37,14 @@ function Get_TravelTimes_Table($TableType)
 	$html .= '</tr>';
 	foreach(get_users($Filter) as $user)
 	{
+		//We only want to show complete records
+		if(($user->FSW_ArrivalDate == '') ||
+		   ($user->FSW_ArrivalTime == '') ||
+		   ($user->FSW_DepartureDate == '') ||
+		   ($user->FSW_DepartureTime == '') ||
+		   ($user->FSW_Airline == ''))	
+			continue;
+	
 		$html .= '<tr>';
 		$html .= "<td><a href='http://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
 
@@ -61,6 +69,7 @@ function Get_TravelTimes_Table($TableType)
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
+//Creates a query of Approved attendees and sorts by Date and then Time
 function Get_TravelTimes_Filter($DateFieldName, $TimeFieldName)
 {
 	return array(
