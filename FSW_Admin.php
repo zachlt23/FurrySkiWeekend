@@ -314,7 +314,7 @@ function Send_Questionnaire()
 				<h1>FSW Questionnaire</h1>
 				<p> 
 					Thanks for applying to FSW!<br>
-					The purpose of the this questionnaire is to identify whether or not
+					The purpose of this questionnaire is to identify whether or not
 					you would be a good fit for our event. We have very limited space 
 					and work very hard to create an environment where everyone attending
 					can feel comfortable and have a fantastic, unique, and memorable time. 
@@ -335,6 +335,7 @@ function Send_Questionnaire()
 					<li>Are you interested in teaching other how to ski/snowboard?</li>
 					<li>Is there anyone attending who you have had negative experiences with or do not like?</li>
 					<li>Have you read through the About section? (http://furryskiweekend.com/about/)</li>
+					<li>Have you filled in your profile?</li>
 					<li>Are you renting a vehicle, or will you need transportation to FSW?</li>
 					<li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
 					<li>Recreational cannabis is legal in CO. Would its isolated use bother you?</li>
