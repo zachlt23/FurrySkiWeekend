@@ -214,6 +214,7 @@ function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
 function Get_FSW_Pending_Buttons($parameters, $userID)
 {
 	$html .= Get_FSW_Status_Button('Approve', $parameters);
+        $html .= Get_FSW_Status_Button('ApproveDayPass', $parameters);
 	$html .= Get_FSW_Status_Button('Waitlist', $parameters);
 	$html .= Get_FSW_Status_Button('Decline', $parameters);
 
@@ -409,6 +410,10 @@ function Update_FSW_Status()
 	{
 		case "Approve":
 			update_user_meta($userID, 'fsw_status', 'Approved - Payment Required');
+			Change_Role($userID,'customer');
+			break;
+                case "ApproveDayPass":
+			update_user_meta($userID, 'fsw_status', 'Approved for Daypass - Payment Required');
 			Change_Role($userID,'customer');
 			break;
 		case "Waitlist":

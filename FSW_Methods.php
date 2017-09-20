@@ -195,21 +195,23 @@ function Get_FSW_StatusMessage($status)
 	switch($status)
 	{
 		case "Pending":
-			return "Your request to attend " . $fsw . " has been received and is being reviewed";
+                    return "Your request to attend " . $fsw . " has been received and is being reviewed";
 		case "Waitlist":
-			return $fsw . " is currently full. You have been added to our waitlist and will be notified if a space becomes available.";
+                    return $fsw . " is currently full. You have been added to our waitlist and will be notified if a space becomes available.";
 		case "Approved - Payment Required":
-			return "You have been approved for " . $fsw . ". You can now pay to secure your spot. (http://furryskiweekend.com/shop/)";
+                    return "You have been approved for " . $fsw . ". You can now pay to secure your spot. (http://furryskiweekend.com/shop/)";
+                case "Approved for Daypass - Payment Required":
+                    return  "You have been approved to purchase a " . $fsw . " daypass. (http://furryskiweekend.com/shop/)";
 		case "Approved - Paid":
-			return "You are approved and paid for " . $fsw . ". We look forward to having you. ^^";
+                    return "You are approved and paid for " . $fsw . ". We look forward to having you. ^^";
 		case "Declined":
-			return "We regret to inform you that you will not be able to attend $fsw";
+                    return "We regret to inform you that you will not be able to attend $fsw";
 		case "Not Registered":
-			return "You have not yet requested to attend " . $fsw;
+                    return "You have not yet requested to attend " . $fsw;
 		case "Refund Requested":
-			return "Your request for a refund is currently being evaluated.";
+                    return "Your request for a refund is currently being evaluated.";
 		default:
-			return "N/A";
+                    return "N/A";
 	}
 	//-----------------------------------------------------------------------------------------------------------
 }
