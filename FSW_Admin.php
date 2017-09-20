@@ -58,6 +58,7 @@ function Get_FSW_Pending_Table()
 	$html .= '<th>Display Name</th>';
 	$html .= '<th>Email</th>';
 	$html .= '<th>Approve</th>';
+        $html .= '<th>Approve Daypass</th>';
 	$html .= '<th>Waitlist</th>';
 	$html .= '<th>Decline</th>';
 	$html .= '<th>Send Questionnaire</th>';
@@ -65,6 +66,28 @@ function Get_FSW_Pending_Table()
 	$html .= Build_FSW_Users('subscriber', $status, 'p');
 	$html .= '</table>';
 	$html .= Get_FSW_Table_Input('p');
+	$html .= '</form>';
+
+	return $html;
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_FSW_Approved_Daypass_Table()
+{
+	$status = 'Approved for Daypass - Payment Required';
+	$count = Get_FSW_Status_Count($status);
+
+	$html .= '<form class="approved" method="post">';
+	$html .= '<table class="FSW_Users">';
+	$html .= "<caption>Approved for Daypass Users - $count</caption>";
+	$html .= '<tr>';
+	$html .= '<th>Display Name</th>';
+	$html .= '<th>Email</th>';
+	$html .= '<th>Paid</th>';
+	$html .= '<th>Waitlist</th>';
+	$html .= '</tr>';
+	$html .= Build_FSW_Users('customer', $status, 'a');
+	$html .= '</table>';
+	$html .= Get_FSW_Table_Input('a');
 	$html .= '</form>';
 
 	return $html;
