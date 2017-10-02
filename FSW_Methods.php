@@ -7,6 +7,7 @@
 $FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Legends 10', 'Legends 11', 'Woods 36', 'Woods 15', 'The Complex', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
+$FSW_AttendanceTypes = array('Full Event', "Daypass");
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Registration_Year()
 {
@@ -109,6 +110,12 @@ function Get_Airline_Select($userID, $disabled = false)
 {
 	$airline = get_user_meta($userID, 'FSW_Airline', true);
 	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline' , $disabled);
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_Attendance_Select($userID, $disabled = false)
+{
+	$attendance = get_user_meta($userID, 'FSW_AttendanceType', true);
+	return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'airline' , $disabled);
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Beds($userID, $disabled = false)
