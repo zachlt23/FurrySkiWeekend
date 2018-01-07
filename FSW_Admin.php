@@ -85,9 +85,9 @@ function Get_FSW_Approved_Daypass_Table()
 	$html .= '<th>Paid</th>';
 	$html .= '<th>Waitlist</th>';
 	$html .= '</tr>';
-	$html .= Build_FSW_Users('customer', $status, 'a');
+	$html .= Build_FSW_Users('customer', $status, 'ad');
 	$html .= '</table>';
-	$html .= Get_FSW_Table_Input('a');
+	$html .= Get_FSW_Table_Input('ad');
 	$html .= '</form>';
 
 	return $html;
@@ -221,6 +221,7 @@ function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
 		case "p":
 			return Get_FSW_Pending_Buttons($parameters, $userID);
 		case "a":
+                case "ad":
 			return Get_FSW_Approved_Buttons($parameters);
 		case "h":
 			return Get_FSW_Housing_Buttons($userID, $parameters);
