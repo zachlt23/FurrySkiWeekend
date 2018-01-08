@@ -115,7 +115,7 @@ function Get_FSW_Approved_Table()
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_FSW_Housing_Table()
+function Get_FSW_Paid_Table()
 {
 	$status = 'Approved - Paid';
 	$count = Get_FSW_Status_Count($status);
@@ -128,6 +128,7 @@ function Get_FSW_Housing_Table()
 	$html .= '<th>Email</th>';
 	$html .= '<th>House Preference</th>';
 	$html .= '<th>Roommate Preference</th>';
+        $html .= '<th>Roommate</th>';
 	$html .= '<th>House</th>';
 	$html .= '<th>Bed</th>';
 	$html .= '<th>Update</th>';
@@ -203,12 +204,14 @@ function Build_FSW_Users($role, $status, $buttonType)
 
 function Get_FSW_Table_Input($prefix)
 {
-	$html .= '<input type="hidden" name="i" id="' . $prefix . '_i" value="">';
-	$html .= '<input type="hidden" name="d" id="' . $prefix . '_d" value="">';
-	$html .= '<input type="hidden" name="e" id="' . $prefix . '_e" value="">';
-	$html .= '<input type="hidden" name="h" id="' . $prefix . '_h" value="">';
-	$html .= '<input type="hidden" name="b" id="' . $prefix . '_b" value="">';
-	return $html;
+    $html .= '<input type="hidden" name="i" id="' . $prefix . '_i" value="">'; //ID
+    $html .= '<input type="hidden" name="d" id="' . $prefix . '_d" value="">'; //Display Name
+    $html .= '<input type="hidden" name="e" id="' . $prefix . '_e" value="">'; //Email
+    $html .= '<input type="hidden" name="h" id="' . $prefix . '_h" value="">'; //House
+    $html .= '<input type="hidden" name="b" id="' . $prefix . '_b" value="">'; //Bed
+    $html .= '<input type="hidden" name="r" id="' . $prefix . '_r" value="">'; //Roommate
+    
+    return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
@@ -224,7 +227,7 @@ function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
                 case "ad":
 			return Get_FSW_Approved_Buttons($parameters);
 		case "h":
-			return Get_FSW_Housing_Buttons($userID, $parameters);
+			return Get_FSW_Paid_Buttons($userID, $parameters);
 		case "w":
 			return Get_FSW_Waitlist_Buttons($parameters);
 		case "r":
@@ -258,12 +261,13 @@ function Get_FSW_Waitlist_Buttons($parameters)
 	return $html;
 }
 
-function Get_FSW_Housing_Buttons($userID, $parameters)
+function Get_FSW_Paid_Buttons($userID, $parameters)
 {
-	$html .= '<td>' . Get_House_Prefs($userID, true) . '</td>';
-	$html .= '<td>' . get_user_meta($userID, 'fsw_roommates', true) . '</td>';
-	$html .= '<td>' . Get_Houses($userID) . '</td>';
-	$html .= '<td>' . Get_Beds($userID) . '</td>';
+	$html .= '<td>' . get_user_meta($userID, 'fsw_house_preference', true) . '</td>';
+        $html .= '<td>' . get_user_meta($userID, 'fsw_roommates', true) . '</td>';
+        $html .= '<td>' . Get_Roommates_Select($userID) . '</td>';
+        $html .= '<td>' . Get_Houses_Select($userID) . '</td>';
+        $html .= '<td>' . Get_Beds_Select($userID) . '</td>';
 	$html .= Get_FSW_Status_Button('Update', $parameters);
 
 	return $html;
@@ -427,6 +431,9 @@ function Update_FSW_Status()
 
 	if(!is_null($_REQUEST['b']))
 		$bed = base64_decode($_REQUEST['b']);
+        
+        if(!is_null($_REQUEST['r']))
+		$roommate = base64_decode($_REQUEST['r']);
 
 	$type = $_REQUEST['approval'];
 	//-----------------------------------------------------------------------------------------------------------
@@ -453,9 +460,11 @@ function Update_FSW_Status()
 			Change_Role($userID,'subscriber');
 			break;
 		case "Update":
+                        update_user_meta($userID, 'FSW_Roommate', $roommate);
 			update_user_meta($userID, 'fsw_house', $house);
 			update_user_meta($userID, 'fsw_bed', $bed);
-			break;
+                        Send_Updated_Housing_Email($userID, $displayName, $email, $roommate, $house, $bed);
+			return;
 		case "Refunded":
 			update_user_meta($userID, 'fsw_status', 'Not Registered');
 			break;
@@ -464,71 +473,75 @@ function Update_FSW_Status()
 			break;
 	}
 	//-----------------------------------------------------------------------------------------------------------
-	$newStatus = get_user_meta( $userID, 'fsw_status', true );
-	$currentHouse = get_user_meta( $userID, 'fsw_house', true );
-	$currentBed = get_user_meta( $userID, 'fsw_bed', true );
-	//-----------------------------------------------------------------------------------------------------------
-	$to = $email;
-	$subject = $displayName . ', your new status for FSW-' . FSW_Registration_Year() . ' is: ' . $newStatus;
-	$message = Get_FSW_Email_Message($userID, $displayName, $type);
-	//-----------------------------------------------------------------------------------------------------------
-	FSW_Email($to, $subject, $message);
+        Send_Updated_Status_Email($userID, $displayName, $email);
 	//-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_FSW_Email_Message($userID, $displayName, $type)
+function Send_Updated_Housing_Email($userID, $displayName, $email, $roommate, $house, $bed)
 {
-	//-----------------------------------------------------------------------------------------------------------
-	$newStatus = get_user_meta($userID, 'fsw_status', true);
-	//-----------------------------------------------------------------------------------------------------------
-	$message .= 'User: ' . $displayName . "\r\n";
-	$message .= 'New Status: ' . $newStatus . "\r\n";
-	$message .= 'Description: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
-	//-----------------------------------------------------------------------------------------------------------
-	if($type == "Update")
-	{
-		$message .= 'House: ' . get_user_meta( $userID, 'fsw_house', true ) . "\r\n";
-		$message .= 'Bed: ' . get_user_meta( $userID, 'fsw_bed', true ) . "\r\n";
-	}
-	//-----------------------------------------------------------------------------------------------------------
-	$message .= "\r\n" . 'www.furryskiweekend.com';
-	//-----------------------------------------------------------------------------------------------------------
-	return $message;
-	//-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    $to = $email;
+    $subject = $displayName . ', your FSW-' . FSW_Registration_Year() . ' housing info has been updated';
+    //-----------------------------------------------------------------------------------------------------------
+    $message .= 'User: ' . $displayName . "\r\n";
+    $message .= 'Roommate: ' . $roommate . "\r\n";
+    $message .= 'House: ' . $house . "\r\n";
+    $message .= 'Bed: ' . $bed . "\r\n";
+    $message .= "\r\n" . 'http://furryskiweekend.com/registration-and-status';
+    //-----------------------------------------------------------------------------------------------------------
+    FSW_Email($to, $subject, $message);
+    //-----------------------------------------------------------------------------------------------------------
+}
+//-----------------------------------------------------------------------------------------------------------
+function Send_Updated_Status_Email($userID, $displayName, $email)
+{
+    //-----------------------------------------------------------------------------------------------------------
+    $newStatus = get_user_meta($userID, 'fsw_status', true);
+    //-----------------------------------------------------------------------------------------------------------
+    $to = $email;
+    $subject = $displayName . ', your new status for FSW-' . FSW_Registration_Year() . ' is: ' . $newStatus;
+    //-----------------------------------------------------------------------------------------------------------
+    $message .= 'User: ' . $displayName . "\r\n";
+    $message .= 'New Status: ' . $newStatus . "\r\n";
+    $message .= 'Description: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
+    $message .= "\r\n" . 'http://furryskiweekend.com/registration-and-status';
+    //-----------------------------------------------------------------------------------------------------------
+    FSW_Email($to, $subject, $message);
+    //-----------------------------------------------------------------------------------------------------------
 } 
 //-----------------------------------------------------------------------------------------------------------
 function Reset_FSW_Registration_Status()
 {	
-	//-----------------------------------------------------------------------------------------------------------
-	$filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
-	//-----------------------------------------------------------------------------------------------------------
-	foreach ( get_users($filter) as $user )
-	{
-		update_user_meta($user->ID, 'fsw_status', 'Not Registered');
-		update_user_meta($user->ID, 'fsw_roommates', '');
-		update_user_meta($user->ID, 'fsw_house_preference', 'None');
-		update_user_meta($user->ID, 'fsw_house', 'None');
-		update_user_meta($user->ID, 'fsw_bed', 'None');
-		update_user_meta($user->ID, 'fsw_qsent', '');
-		update_user_meta($user->ID, 'FSW_ArrivalDate', '');
-		update_user_meta($user->ID, 'FSW_ArrivalTime', 'None');
-		update_user_meta($user->ID, 'FSW_DepartureDate', '');
-		update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
-		update_user_meta($user->ID, 'FSW_Airline', '');
-	}
-	//-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
+    //-----------------------------------------------------------------------------------------------------------
+    foreach ( get_users($filter) as $user )
+    {
+            update_user_meta($user->ID, 'fsw_status', 'Not Registered');
+            update_user_meta($user->ID, 'fsw_roommates', '');
+            update_user_meta($user->ID, 'fsw_house_preference', 'None');
+            update_user_meta($user->ID, 'fsw_house', 'None');
+            update_user_meta($user->ID, 'fsw_bed', 'None');
+            update_user_meta($user->ID, 'fsw_qsent', '');
+            update_user_meta($user->ID, 'FSW_ArrivalDate', '');
+            update_user_meta($user->ID, 'FSW_ArrivalTime', 'None');
+            update_user_meta($user->ID, 'FSW_DepartureDate', '');
+            update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
+            update_user_meta($user->ID, 'FSW_Airline', '');
+    }
+    //-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
 function Email_FSW_Users()
 {
-	//-----------------------------------------------------------------------------------------------------------
-	$subject = $_REQUEST['subject'];
-	$message = $_REQUEST['message'];
-	$emails = $_REQUEST['emails'];
-	//-----------------------------------------------------------------------------------------------------------
-	foreach (explode(",", $emails) as $email)
-		FSW_Email($email, $subject, $message);
-	//-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+    $subject = $_REQUEST['subject'];
+    $message = $_REQUEST['message'];
+    $emails = $_REQUEST['emails'];
+    //-----------------------------------------------------------------------------------------------------------
+    foreach (explode(",", $emails) as $email)
+            FSW_Email($email, $subject, $message);
+    //-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
 ?>

@@ -1,9 +1,5 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-//Version: 1.0.1
-//Date Changed: 01/22/2017
-//Revision: Updated FSW_Houses
-//-----------------------------------------------------------------------------------------------------------
 $FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Legends 10', 'Legends 11', 'Woods 36', 'Woods 15', 'The Complex', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
@@ -93,36 +89,62 @@ function Create_Header_Row($name, $value)
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_House_Prefs($userID, $disabled = false)
+//This is for the preferences page
+function Get_House_Prefs($userID)
 {
-	$house = get_user_meta($userID, 'fsw_house_preference', true);
-	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , 'select_house_pref', 'house_pref', $disabled);
+    $house = get_user_meta($userID, 'fsw_house_preference', true);
+    return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , 'select_house_pref', 'house_pref');
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_Houses($userID, $disabled = false)
+//This is for the Admin page
+function Get_Houses_Select($userID)
 {
 	$id = 'select_house_' . $userID;
 	$house = get_user_meta($userID, 'fsw_house', true);
-	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , $id, 'houses', $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , $id, 'houses');
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_Airline_Select($userID, $disabled = false)
+function Get_Airline_Select($userID)
 {
 	$airline = get_user_meta($userID, 'FSW_Airline', true);
-	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline' , $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline');
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_Attendance_Select($userID, $disabled = false)
+function Get_Attendance_Select($userID)
 {
 	$attendance = get_user_meta($userID, 'FSW_AttendanceType', true);
-	return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'airline' , $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'airline');
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_Beds($userID, $disabled = false)
+function Get_Beds_Select($userID)
 {
 	$id = 'select_bed_' . $userID;
 	$bed = get_user_meta($userID, 'fsw_bed', true);
-	return Get_FSW_Select($GLOBALS['FSW_Beds'], $bed, $id, 'beds', $disabled);
+	return Get_FSW_Select($GLOBALS['FSW_Beds'], $bed, $id, 'beds');
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_Roommates_Select($userID)
+{
+	$id = 'select_roommate_' . $userID;
+	$roommate = get_user_meta($userID, 'FSW_Roommate', true);
+        $filter = array('fields' => array('display_name'), 
+                        'meta_key' => 'fsw_status',  
+                        'meta_value' => 'Approved - Paid',
+                        'order' => 'ASC',
+                        'orderby' => 'display_name'
+                        );
+        
+        $html .= '<select id="' . $id .'">';
+        $html .= '<option value="None">None</option>';
+	foreach(get_users($filter) as $user)
+        {
+            $displayName = $user->display_name;
+            $selected = ($roommate == $displayName) ? "selected" : "";
+            $html .= '<option value="' . $displayName . '" ' . $selected . '>' . $displayName . '</option>';
+        }
+	$html .= '</select>';
+        
+	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)

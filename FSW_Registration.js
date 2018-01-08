@@ -49,12 +49,12 @@ function Set_Preferences()
 	var house = document.getElementById('select_house_pref');
 	var sHouse = house.options[house.selectedIndex].value;
         //-----------------------------------------------------------------------------------------------------------
-        var attendanceSelect = document.getElementById('attendance_select');
-        var attendanceType = attendanceSelect.options[attendanceSelect.selectedIndex].value;
+        //var attendanceSelect = document.getElementById('attendance_select');
+        //var attendanceType = attendanceSelect.options[attendanceSelect.selectedIndex].value;
 	//-----------------------------------------------------------------------------------------------------------
 	document.getElementById('pref_roommates').value = window.btoa(roommates);
 	document.getElementById('pref_house').value = window.btoa(sHouse);
-        document.getElementById('pref_attendance').value = window.btoa(attendanceType);
+        //document.getElementById('pref_attendance').value = window.btoa(attendanceType);
 	//-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------

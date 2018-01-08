@@ -17,6 +17,11 @@ function Update_FSW_Hidden(type, id, name, email)
 	if(bed_selector != null)
 		document.getElementById(type + '_b').value = window.btoa(bed_selector.value);
 	//-----------------------------------------------------------------------------------------------------------
+        var roommate_selector = document.getElementById('select_roommate_' + decrypted_id);
+
+	if(roommate_selector != null)
+		document.getElementById(type + '_r').value = window.btoa(roommate_selector.value);
+	//-----------------------------------------------------------------------------------------------------------
 }
 
 function Enable_Reset()

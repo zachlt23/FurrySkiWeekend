@@ -84,7 +84,7 @@ function FSW_RegistrationManagement_GeneratePage()
 	echo Get_FSW_Waitlist_Table();
 	echo Get_FSW_Approved_Table();
         echo Get_FSW_Approved_Daypass_Table();
-	echo Get_FSW_Housing_Table();
+	echo Get_FSW_Paid_Table();
 	echo Get_FSW_Refund_Table();
 }
 
