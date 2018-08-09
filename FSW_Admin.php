@@ -1,5 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
+//Include statement
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Verification()
@@ -352,7 +353,7 @@ function Send_Questionnaire()
 				<ul style='list-style-type:disc'>
   					<li>Why do you want to attend FSW?</li>
 	
-					<li>Tell us a little bit about yourself.</li>
+					<li>Tell us a little about yourself.</li>
 					<li>Will you be at least 21 years old by the first day of FSW?</li>
   					<li>Who do you know who is attending this year or who has attended in past years?</li>
 					<li>Do you ski, snowboard, both, or neither?</li>
@@ -364,7 +365,7 @@ function Send_Questionnaire()
 					<li>Are you interested in teaching other how to ski/snowboard?</li>
 					<li>Is there anyone attending who you have had negative experiences with or do not like?</li>
 					<li>Have you read through the About section? (http://furryskiweekend.com/about/)</li>
-					<li>Have you filled in your profile?</li>
+					<li>Have you filled in your profile, including your icon?</li>
 					<li>Are you renting a vehicle, or will you need transportation to FSW?</li>
 					<li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
 					<li>Recreational cannabis is legal in CO. Would its isolated use bother you?</li>
@@ -513,6 +514,7 @@ function Send_Updated_Status_Email($userID, $displayName, $email)
 function Reset_FSW_Registration_Status()
 {	
     //-----------------------------------------------------------------------------------------------------------
+    //Exclude admins Tek, Dire, Tuaolo
     $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
     //-----------------------------------------------------------------------------------------------------------
     foreach ( get_users($filter) as $user )
@@ -528,6 +530,8 @@ function Reset_FSW_Registration_Status()
             update_user_meta($user->ID, 'FSW_DepartureDate', '');
             update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
             update_user_meta($user->ID, 'FSW_Airline', '');
+            update_user_meta($user->ID, 'FSW_Roommate', '');
+            update_user_meta($user->ID, 'FSW_Attendence_Type', 'None');
     }
     //-----------------------------------------------------------------------------------------------------------
 }
