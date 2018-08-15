@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------------------------------------
 //Include statement
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
+include('/wordpress/core/4.9.8/wp-includes/pluggable.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Verification()
 {
@@ -194,7 +195,7 @@ function Build_FSW_Users($role, $status, $buttonType)
 		if(!in_array($user->ID, array('1','5','7')))
 		{
 			$html .= '<tr>';
-			$html .= "<td><a href='http://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
+			$html .= "<td><a href='https://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
 			$html .= '<td>' . $user->user_email . '</td>';
 			$html .=  Get_FSW_User_Buttons($buttonType, $user->ID, $user->display_name, $user->user_email);
 			$html .= '</tr>';
@@ -364,7 +365,7 @@ function Send_Questionnaire()
 					<li>Are you interested in taking video/pictures during the event for our use?</li>
 					<li>Are you interested in teaching other how to ski/snowboard?</li>
 					<li>Is there anyone attending who you have had negative experiences with or do not like?</li>
-					<li>Have you read through the About section? (http://furryskiweekend.com/about/)</li>
+					<li>Have you read through the About section? (https://furryskiweekend.com/about/)</li>
 					<li>Have you filled in your profile, including your icon?</li>
 					<li>Are you renting a vehicle, or will you need transportation to FSW?</li>
 					<li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
@@ -488,7 +489,7 @@ function Send_Updated_Housing_Email($userID, $displayName, $email, $roommate, $h
     $message .= 'Roommate: ' . $roommate . "\r\n";
     $message .= 'House: ' . $house . "\r\n";
     $message .= 'Bed: ' . $bed . "\r\n";
-    $message .= "\r\n" . 'http://furryskiweekend.com/registration-and-status';
+    $message .= "\r\n" . 'https://furryskiweekend.com/registration-and-status';
     //-----------------------------------------------------------------------------------------------------------
     FSW_Email($to, $subject, $message);
     //-----------------------------------------------------------------------------------------------------------
@@ -505,7 +506,7 @@ function Send_Updated_Status_Email($userID, $displayName, $email)
     $message .= 'User: ' . $displayName . "\r\n";
     $message .= 'New Status: ' . $newStatus . "\r\n";
     $message .= 'Description: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
-    $message .= "\r\n" . 'http://furryskiweekend.com/registration-and-status';
+    $message .= "\r\n" . 'https://furryskiweekend.com/registration-and-status';
     //-----------------------------------------------------------------------------------------------------------
     FSW_Email($to, $subject, $message);
     //-----------------------------------------------------------------------------------------------------------
@@ -513,12 +514,14 @@ function Send_Updated_Status_Email($userID, $displayName, $email)
 //-----------------------------------------------------------------------------------------------------------
 function Reset_FSW_Registration_Status()
 {	
-    //-----------------------------------------------------------------------------------------------------------
-    //Exclude admins Tek, Dire, Tuaolo
-    $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
-    //-----------------------------------------------------------------------------------------------------------
-    foreach ( get_users($filter) as $user )
+    try
     {
+        //-----------------------------------------------------------------------------------------------------------
+        //Exclude admins Tek, Dire, Tuaolo
+        $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
+        //-----------------------------------------------------------------------------------------------------------
+        foreach ( get_users($filter) as $user )
+        {
             update_user_meta($user->ID, 'fsw_status', 'Not Registered');
             update_user_meta($user->ID, 'fsw_roommates', '');
             update_user_meta($user->ID, 'fsw_house_preference', 'None');
@@ -531,9 +534,14 @@ function Reset_FSW_Registration_Status()
             update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
             update_user_meta($user->ID, 'FSW_Airline', '');
             update_user_meta($user->ID, 'FSW_Roommate', '');
-            update_user_meta($user->ID, 'FSW_Attendence_Type', 'None');
+            update_user_meta($user->ID, 'FSW_AttendenceType', '');
+        }
+        //-----------------------------------------------------------------------------------------------------------
     }
-    //-----------------------------------------------------------------------------------------------------------
+    catch(Exception $e) 
+    {
+        echo $e->getMessage();
+    }
 }
 //-----------------------------------------------------------------------------------------------------------
 function Email_FSW_Users()

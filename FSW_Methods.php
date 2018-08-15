@@ -4,6 +4,8 @@ $FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Legends 10'
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 $FSW_AttendanceTypes = array('Full Event', "Daypass");
+$FSW_DietaryRestrictions = array('None','Allergy - Dairy','Allergy - Eggs','Allergy - Fish','Allergy - Gluten','Allergy - Peanuts','Allergy - Shellfish','Allergy - Soy','Allergy - Tree Nuts','Allergy - Other',
+    'Restriction - Kosher','Restriction - Pescatarian','Restriction - Vegetarian','Restriction - Vegetarian','Restriction - Vegan');
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Registration_Year()
 {
@@ -87,6 +89,12 @@ function Create_Header_Row($name, $value)
 	$html .= '<td>' . $value . '</td>';
 	$html .= '</tr>';
 	return $html;
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_DietaryRestrictions($userID)
+{
+    $restriction = get_user_meta($userID, 'FSW_Dietary_Restrictions', true);
+    return Get_FSW_Select($GLOBALS['FSW_DietaryRestrictions'],$restriction, 'select_restriction_pref','restriction_pref');
 }
 //-----------------------------------------------------------------------------------------------------------
 //This is for the preferences page
@@ -177,7 +185,6 @@ function Get_User_Select()
 						)
 			);
 
-
 	$html .= '<select id="select_roommates">';
 	foreach(get_users($filter) as $user)
 		$html .= '<option value="' . $user->display_name . '">' . $user->display_name . '</option>';
@@ -228,9 +235,9 @@ function Get_FSW_StatusMessage($status)
 		case "Waitlist":
                     return $fsw . " is currently full. You have been added to our waitlist and will be notified if a space becomes available.";
 		case "Approved - Payment Required":
-                    return "You have been approved for " . $fsw . ". You can now pay to secure your spot. (http://furryskiweekend.com/shop/)";
+                    return "You have been approved for " . $fsw . ". You can now pay to secure your spot. (https://furryskiweekend.com/shop/)";
                 case "Approved for Daypass - Payment Required":
-                    return  "You have been approved to purchase a " . $fsw . " daypass. (http://furryskiweekend.com/shop/)";
+                    return  "You have been approved to purchase a " . $fsw . " daypass. (https://furryskiweekend.com/shop/)";
 		case "Approved - Paid":
                     return "You are approved and paid for " . $fsw . ". We look forward to having you. ^^";
 		case "Declined":
