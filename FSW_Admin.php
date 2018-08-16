@@ -514,34 +514,27 @@ function Send_Updated_Status_Email($userID, $displayName, $email)
 //-----------------------------------------------------------------------------------------------------------
 function Reset_FSW_Registration_Status()
 {	
-    try
+    //-----------------------------------------------------------------------------------------------------------
+    //Exclude admins Tek, Dire, Tuaolo
+    $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
+    //-----------------------------------------------------------------------------------------------------------
+    foreach ( get_users($filter) as $user )
     {
-        //-----------------------------------------------------------------------------------------------------------
-        //Exclude admins Tek, Dire, Tuaolo
-        $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
-        //-----------------------------------------------------------------------------------------------------------
-        foreach ( get_users($filter) as $user )
-        {
-            update_user_meta($user->ID, 'fsw_status', 'Not Registered');
-            update_user_meta($user->ID, 'fsw_roommates', '');
-            update_user_meta($user->ID, 'fsw_house_preference', 'None');
-            update_user_meta($user->ID, 'fsw_house', 'None');
-            update_user_meta($user->ID, 'fsw_bed', 'None');
-            update_user_meta($user->ID, 'fsw_qsent', '');
-            update_user_meta($user->ID, 'FSW_ArrivalDate', '');
-            update_user_meta($user->ID, 'FSW_ArrivalTime', 'None');
-            update_user_meta($user->ID, 'FSW_DepartureDate', '');
-            update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
-            update_user_meta($user->ID, 'FSW_Airline', '');
-            update_user_meta($user->ID, 'FSW_Roommate', '');
-            update_user_meta($user->ID, 'FSW_AttendenceType', '');
-        }
-        //-----------------------------------------------------------------------------------------------------------
+        update_user_meta($user->ID, 'fsw_status', 'Not Registered');
+        update_user_meta($user->ID, 'fsw_roommates', '');
+        update_user_meta($user->ID, 'fsw_house_preference', 'None');
+        update_user_meta($user->ID, 'fsw_house', 'None');
+        update_user_meta($user->ID, 'fsw_bed', 'None');
+        update_user_meta($user->ID, 'fsw_qsent', '');
+        update_user_meta($user->ID, 'FSW_ArrivalDate', '');
+        update_user_meta($user->ID, 'FSW_ArrivalTime', 'None');
+        update_user_meta($user->ID, 'FSW_DepartureDate', '');
+        update_user_meta($user->ID, 'FSW_DepartureTime', 'None');
+        update_user_meta($user->ID, 'FSW_Airline', '');
+        update_user_meta($user->ID, 'FSW_Roommate', '');
+        update_user_meta($user->ID, 'FSW_AttendenceType', '');
     }
-    catch(Exception $e) 
-    {
-        echo $e->getMessage();
-    }
+    //-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
 function Email_FSW_Users()
@@ -556,4 +549,46 @@ function Email_FSW_Users()
     //-----------------------------------------------------------------------------------------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
+function Get_FSW_DietaryRestrictionGrid()
+{
+    //-----------------------------------------------------------------------------------------------------------
+    $restrictions = array();
+    //-----------------------------------------------------------------------------------------------------------
+    foreach ($GLOBALS['FSW_DietaryRestrictions'] as $item)
+    {
+        $restrictions[$item] = 0;
+    }
+    //-----------------------------------------------------------------------------------------------------------
+    //Remove "None"
+    unset($restrictions[0]);
+    //-----------------------------------------------------------------------------------------------------------
+    foreach ( Get_AttendingUsers() as $user )
+    {
+        $restrictionItem = get_user_meta($user->ID, 'FSW_Dietary_Restrictions', true);
+        
+        if($restrictionItem != '' && $restrictionItem != 'None')
+        {
+            $restrictions[$restrictionItem] += 1;
+        }
+    }
+    //-----------------------------------------------------------------------------------------------------------
+    $html .= '<table class="FSW_DietaryRestrictions">';
+    $html .= '<tr>';
+    $html .= '<th>Restriction</th>';
+    $html .= '<th>Count</th>';
+    $html .= '</tr>';
+    
+    foreach($restrictions as $key => $item)
+    {
+        $html .= '<tr>';
+        $html .= '<td>' . $key . '</td>';
+        $html .= '<td>' . $item . '</td>';
+        $html .= '</tr>';  
+    }
+
+    $html .= '</table>';
+    //-----------------------------------------------------------------------------------------------------------
+    return $html;
+    //-----------------------------------------------------------------------------------------------------------
+}
 ?>

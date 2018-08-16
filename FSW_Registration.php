@@ -77,6 +77,13 @@ function FSW_Registration_GenerateMenu()
 			 'manage_options', //the capability required to access
 			 'FSW_Tools', //Unique slug name
 			 'FSW_Tools_GeneratePage');
+        
+        add_submenu_page('FSW_Registration_Console', //parent menu slug name
+			 'User Info', //Page Title
+		         'User Info', //Menu Title
+			 'manage_options', //the capability required to access
+			 'FSW_UserInfo', //Unique slug name
+			 'FSW_UserInfo_GeneratePage');
 }
 
 function FSW_RegistrationManagement_GeneratePage()
@@ -98,6 +105,11 @@ function FSW_Tools_GeneratePage()
 {
 	echo Get_FSW_Verification();
 	echo Get_FSW_Reset_Button();
+}
+
+function FSW_UserInfo_GeneratePage()
+{
+    echo Get_FSW_DietaryRestrictionGrid();
 }
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Display_Registration($atts, $content = null)

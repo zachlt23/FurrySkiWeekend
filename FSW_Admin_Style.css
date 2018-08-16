@@ -3,7 +3,7 @@
 .Reset td{border: 2px solid black; text-align: center;}
 .Reset th{border: 2px solid black; text-align: center; background-color: black; color: white;}
 /*-----------------------------------------------------------------------------------------------------------*/
-.pending, .approved, .FSW_Emails, .FSW_Verification
+.pending, .approved, .FSW_Emails, .FSW_Verification, .FSW_DietaryRestrictions
 {
 	border: 2px solid black;
 	margin: 10px 0px 10px 0px;

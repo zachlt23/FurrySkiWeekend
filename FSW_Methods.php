@@ -193,6 +193,18 @@ function Get_User_Select()
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
+function Get_AttendingUsers()
+{
+    $filter = array('fields' => array('display_name','ID'),
+                    'meta_query' => array('relation' => 'OR',
+                                            array('key' => 'fsw_status', 'value' => 'Approved - Paid'),
+                                            array('key' => 'fsw_status', 'value' => 'Approved - Payment Required')
+                                        )
+                    );
+    
+    return get_users($filter);
+}
+//-----------------------------------------------------------------------------------------------------------
 function Get_User_Email_Select($id)
 {
 	$filter = array('order' => 'ASC','orderby' => 'display_name','fields' => array('display_name','user_email'));
