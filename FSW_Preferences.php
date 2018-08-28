@@ -21,36 +21,41 @@ function Set_FSW_Preferences()
 function Get_FSW_Preferences($userID)
 {
 	$html .= '<form method="post">';
-	$html .= '<div class="pref_div">';
-        
+	
+        $html .= '<div id="pref_div">';
 	$html .= 'Select Prefered House:';
         $html .= '<br>';
 	$html .= Get_House_Prefs($userID);
-        $html .= '<br><br>';
+        $html .= '</div>';
+        $html .= '<br>';
         
+        $html .= '<div id="dietary_div">';
         $html .= 'Select Dietary Restriction:';
         $html .= '<br>';
 	$html .= Get_DietaryRestrictions($userID);
-        $html .= '<br><br>';
+        $html .= '</div>';
+        $html .= '<br>';
         
         //$html .= 'Select Attendence Type:';
         //$html .= '<br>';
         //$html .= Get_Attendance_Select($userID);
         //$html .= '<br><br>';
         
+        $html .= '<div id="roommates_div">';
 	$html .= 'Add Prefered Roommate(s):';
         $html .= '<br>';
 	$html .= Get_User_Select();
 	$html .= '<input type="button" name="add_roommate" id="add_roommate" value="Add" onclick="Add_Roommate()">';
 	$html .= Get_Roommate_Table($userID);
-        
 	$html .= '</div>';
+        
 	$html .= '<input type="submit" name="preferences" id="save_prefs" value="Save" onclick="Set_Preferences()"/>';
 	$html .= '<input type="hidden" name="r" id="pref_roommates" value="">';
 	$html .= '<input type="hidden" name="h" id="pref_house" value="">';
         $html .= '<input type="hidden" name="dr" id="pref_restriction" value="">';
         //$html .= '<input type="hidden" name="a" id="pref_attendance" value="">';
 	$html .= '<input type="hidden" name="i" id="pref_ID" value="' . base64_encode($userID) . '">';
+        
 	$html .= '</form>';
 	
 	return $html;

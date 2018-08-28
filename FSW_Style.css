@@ -1,3 +1,7 @@
+body.page-id-963 #pref_div, #dietary_div { float: left; margin: 0px 30px 30px 0px; }
+body.page-id-963 .entry-content br:nth-child(2) { display:none; }
+body.page-id-963 #roommates_div { clear:both; }
+body.page-id-963 #select_roommates { margin: 0px 10px 0px 0px; }
 /*-----------------------------------------------------------------------------------------------------------*/
 #roommate_table { float: left; text-align: center; table-layout: auto;}
 #roommate_table td { text-align: center;}
@@ -9,9 +13,11 @@
 /*-----------------------------------------------------------------------------------------------------------*/
 .FSW_Not_Open {text-align: center; background-color: black; color: white; margin: 10px auto; width: 290px;}
 /*-----------------------------------------------------------------------------------------------------------*/
-//#user_status_table {border: 2px solid black; table-layout: auto; clear: left;}
-//#user_status_table td{border: 2px solid black; text-align: center;}
-//#user_status_table th{border: 2px solid black; text-align: center; background-color: black; color: white;}
+/*
+* #user_status_table {border: 2px solid black; table-layout: auto; clear: left;}
+* #user_status_table td{border: 2px solid black; text-align: center;}
+* #user_status_table th{border: 2px solid black; text-align: center; background-color: black; color: white;}
+*/
 /*-----------------------------------------------------------------------------------------------------------*/
 .TravelTimes caption { text-align:center; font-weight: bold; text-decoration: underline;}
 /*-----------------------------------------------------------------------------------------------------------*/
@@ -19,3 +25,6 @@ tr.Available { background-color: grey; color: white; }
 /*-----------------------------------------------------------------------------------------------------------*/
 #fsw_housing_table th, #fsw_housing_table td { text-align: center; }
 /*-----------------------------------------------------------------------------------------------------------*/
+/* #pref_div, #dietary_div { float: left; border-style: solid; } */
+/*-----------------------------------------------------------------------------------------------------------*/
+
