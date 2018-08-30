@@ -9,12 +9,14 @@ function Set_FSW_Preferences()
 	$house = base64_decode($_REQUEST['h']);
 	$userID = base64_decode($_REQUEST['i']);
         $restriction = base64_decode($_REQUEST['dr']);
-        //$attendance = base64_decode($_REQUEST['a']);
+        $attendance = base64_decode($_REQUEST['a']);
+        $so = base64_decode($_REQUEST['so']);
 	//---------------------------
 	update_user_meta($userID, 'fsw_roommates', $roommates);
 	update_user_meta($userID, 'fsw_house_preference', $house);
         update_user_meta($userID, 'FSW_Dietary_Restrictions', $restriction);
-        //update_user_meta($userID, 'FSW_AttendanceType', $attendance);
+        update_user_meta($userID, 'FSW_AttendanceType', $attendance);
+        update_user_meta($userID, 'FSW_SO', $so);
 	//---------------------------
 }
 //-----------------------------------------------------------------------------------------------------------
@@ -23,23 +25,32 @@ function Get_FSW_Preferences($userID)
 	$html .= '<form method="post">';
 	
         $html .= '<div id="pref_div">';
-	$html .= 'Select Prefered House:';
+	$html .= 'Prefered House:';
         $html .= '<br>';
 	$html .= Get_House_Prefs($userID);
         $html .= '</div>';
         $html .= '<br>';
         
         $html .= '<div id="dietary_div">';
-        $html .= 'Select Dietary Restriction:';
+        $html .= 'Dietary Restriction:';
         $html .= '<br>';
 	$html .= Get_DietaryRestrictions($userID);
         $html .= '</div>';
         $html .= '<br>';
         
-        //$html .= 'Select Attendence Type:';
-        //$html .= '<br>';
-        //$html .= Get_Attendance_Select($userID);
-        //$html .= '<br><br>';
+        $html .= '<div id="attendance_div">';
+        $html .= 'Attendance Type:';
+        $html .= '<br>';
+        $html .= Get_Attendance_Select($userID);
+        $html .= '</div>';
+        $html .= '<br>';
+        
+        $html .= '<div id="significantOtter_div">';
+        $html .= 'Significant Otter:';
+        $html .= '<br>';
+        $html .= Get_SO_Select($userID);
+        $html .= '</div>';
+        $html .= '<br>';
         
         $html .= '<div id="roommates_div">';
 	$html .= 'Add Prefered Roommate(s):';
@@ -53,7 +64,8 @@ function Get_FSW_Preferences($userID)
 	$html .= '<input type="hidden" name="r" id="pref_roommates" value="">';
 	$html .= '<input type="hidden" name="h" id="pref_house" value="">';
         $html .= '<input type="hidden" name="dr" id="pref_restriction" value="">';
-        //$html .= '<input type="hidden" name="a" id="pref_attendance" value="">';
+        $html .= '<input type="hidden" name="a" id="pref_attendance" value="">';
+        $html .= '<input type="hidden" name="so" id="pref_so" value="">';
 	$html .= '<input type="hidden" name="i" id="pref_ID" value="' . base64_encode($userID) . '">';
         
 	$html .= '</form>';

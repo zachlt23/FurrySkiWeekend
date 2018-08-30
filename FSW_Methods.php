@@ -121,7 +121,7 @@ function Get_Airline_Select($userID)
 function Get_Attendance_Select($userID)
 {
 	$attendance = get_user_meta($userID, 'FSW_AttendanceType', true);
-	return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'airline');
+	return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'attendance');
 }
 //-----------------------------------------------------------------------------------------------------------
 function Get_Beds_Select($userID)
@@ -169,25 +169,41 @@ function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 	return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
+function Get_SO_Select($userID)
+{
+    $values = array('none');
+    
+    foreach(Get_AttendingUsers() as $user)
+    {
+        array_push($values, $user->display_name);
+    }
+    
+    $so = get_user_meta($userID, 'FSW_SO', true);
+    return Get_FSW_Select($values, $so, "select_so", "significantOtter");
+}
+
 function Get_User_Select()
 {
-	$filter = array('fields' => array('display_name'),
-			'meta_query' => array(
-						'relation' => 'OR',
-						array(
-							'key' => 'fsw_status', 
-							'value' => 'Approved - Paid'
-							),
-        					array(
-							'key' => 'fsw_status', 
-							'value' => 'Approved - Payment Required'
-							)
-						)
-			);
+//	$filter = array('fields' => array('display_name'),
+//			'meta_query' => array(
+//						'relation' => 'OR',
+//						array(
+//							'key' => 'fsw_status', 
+//							'value' => 'Approved - Paid'
+//							),
+//        					array(
+//							'key' => 'fsw_status', 
+//							'value' => 'Approved - Payment Required'
+//							)
+//						)
+//			);
 
 	$html .= '<select id="select_roommates">';
-	foreach(get_users($filter) as $user)
+	//foreach(get_users($filter) as $user)
+        foreach(Get_AttendingUsers() as $user)
+        {
 		$html .= '<option value="' . $user->display_name . '">' . $user->display_name . '</option>';
+        }
 	$html .= '</select>';
 
 	return $html;
