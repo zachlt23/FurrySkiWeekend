@@ -2,6 +2,7 @@
 .Reset {border: 2px solid black; table-layout: auto; clear: left;}
 .Reset td{border: 2px solid black; text-align: center;}
 .Reset th{border: 2px solid black; text-align: center; background-color: black; color: white;}
+.FSW_DietaryRestrictions th { text-align: left; }
 /*-----------------------------------------------------------------------------------------------------------*/
 .pending, .approved, .FSW_Emails, .FSW_Verification, .FSW_DietaryRestrictions
 {
