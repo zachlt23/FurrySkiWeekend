@@ -183,9 +183,11 @@ function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 //-----------------------------------------------------------------------------------------------------------
 function Get_SO_Select($userID)
 {
+    $filter = array('fields' => array('display_name'));
+
     $values = array('none');
     
-    foreach(Get_AttendingUsers() as $user)
+    foreach(get_users($filter) as $user)
     {
         array_push($values, $user->display_name);
     }
@@ -197,7 +199,7 @@ function Get_SO_Select($userID)
 function Get_User_Select()
 {
     $html .= '<select id="select_roommates">';
-    //foreach(get_users($filter) as $user)
+    
     foreach(Get_AttendingUsers() as $user)
     {
             $html .= '<option value="' . $user->display_name . '">' . $user->display_name . '</option>';
@@ -219,12 +221,32 @@ function Get_AttendingUsers()
     return get_users($filter);
 }
 //-----------------------------------------------------------------------------------------------------------
+function Get_FSW_Users($status, $role)
+{
+    $user_query = Get_FSW_UserFilter($status, $role);
+    return get_users($user_query);
+}
+//-----------------------------------------------------------------------------------------------------------
+function Get_FSW_UserFilter($status, $role)
+{
+    return  array('role' => $role,
+                  'meta_key' => 'fsw_status', 
+                  'meta_value' => $status,
+                  'exclude' => array('1','5','7'),
+                  'orderby' => 'display_name',
+                  'order' => 'ASC', 
+                  'fields' => array('ID','display_name','user_email'));
+}
+//-----------------------------------------------------------------------------------------------------------
+
 function Get_User_Email_Select($id)
 {
     $filter = array('order' => 'ASC','orderby' => 'display_name','fields' => array('display_name','user_email'));
     $html .= "<select id=$id>";
     foreach(get_users($filter) as $user)
+    {
             $html .= "<option value='$user->display_name|$user->user_email'>$user->display_name</option>";
+    }
     $html .= '</select>';
 
     return $html;
@@ -235,17 +257,16 @@ function Get_FSW_Emails()
     $emails = array();
     $filter = array('fields' => array('user_email'));
     foreach(get_users($filter) as $user)
+    {
             array_push($emails, $user->user_email);
+    }
     return implode(",",$emails);
 }
 //-----------------------------------------------------------------------------------------------------------
-function Get_FSW_Status_Count($status)
+function Get_FSW_Status_Count($status, $role)
 {
-    $user_query 
-            = new WP_User_Query(array('meta_key' => 'fsw_status', 
-                                      'meta_value' => $status, 
-                                      'exclude' => array('1','5','7'), 
-                                      'fields' => array('ID')));
+    $filter = Get_FSW_UserFilter($status, $role);
+    $user_query = new WP_User_Query($filter); 
     return $user_query->get_total();
 }
 //-----------------------------------------------------------------------------------------------------------

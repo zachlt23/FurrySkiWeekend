@@ -51,7 +51,8 @@ function Get_FSW_Mass_Email()
 function Get_FSW_Pending_Table()
 {
     $status = 'Pending';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'subscriber';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="pending" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -65,7 +66,7 @@ function Get_FSW_Pending_Table()
     $html .= '<th>Decline</th>';
     $html .= '<th>Send Questionnaire</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('subscriber', $status, 'p');
+    $html .= Build_FSW_Users($status, $role, 'p');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('p');
     $html .= '</form>';
@@ -76,7 +77,8 @@ function Get_FSW_Pending_Table()
 function Get_FSW_Approved_Daypass_Table()
 {
     $status = 'Approved for Daypass - Payment Required';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'customer';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="approved" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -87,7 +89,7 @@ function Get_FSW_Approved_Daypass_Table()
     $html .= '<th>Paid</th>';
     $html .= '<th>Waitlist</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('customer', $status, 'ad');
+    $html .= Build_FSW_Users($status, $role, 'ad');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('ad');
     $html .= '</form>';
@@ -98,7 +100,8 @@ function Get_FSW_Approved_Daypass_Table()
 function Get_FSW_Approved_Table()
 {
     $status = 'Approved - Payment Required';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'customer';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="approved" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -109,7 +112,7 @@ function Get_FSW_Approved_Table()
     $html .= '<th>Paid</th>';
     $html .= '<th>Waitlist</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('customer', $status, 'a');
+    $html .= Build_FSW_Users($status, $role, 'a');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('a');
     $html .= '</form>';
@@ -120,7 +123,8 @@ function Get_FSW_Approved_Table()
 function Get_FSW_Paid_Table()
 {
     $status = 'Approved - Paid';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'subscriber';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="approved" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -136,7 +140,7 @@ function Get_FSW_Paid_Table()
     $html .= '<th>Bed</th>';
     $html .= '<th>Update</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('subscriber', $status, 'h');
+    $html .= Build_FSW_Users($status, $role, 'h');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('h');
     $html .= '</form>';
@@ -147,7 +151,8 @@ function Get_FSW_Paid_Table()
 function Get_FSW_Waitlist_Table()
 {
     $status = 'Waitlist';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'subscriber';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="approved" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -158,7 +163,7 @@ function Get_FSW_Waitlist_Table()
     $html .= '<th>Approve</th>';
     $html .= '<th>Decline</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('subscriber', $status, 'w');
+    $html .= Build_FSW_Users($status, $role, 'w');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('w');
     $html .= '</form>';
@@ -169,7 +174,8 @@ function Get_FSW_Waitlist_Table()
 function Get_FSW_Refund_Table()
 {
     $status = 'Refund Requested';
-    $count = Get_FSW_Status_Count($status);
+    $role = 'subscriber';
+    $count = Get_FSW_Status_Count($status, $role);
 
     $html .= '<form class="approved" method="post">';
     $html .= '<table class="FSW_Users">';
@@ -180,7 +186,7 @@ function Get_FSW_Refund_Table()
     $html .= '<th>Refunded</th>';
     $html .= '<th>Rescinded</th>';
     $html .= '</tr>';
-    $html .= Build_FSW_Users('subscriber', $status, 'r');
+    $html .= Build_FSW_Users($status, $role, 'r');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('r');
     $html .= '</form>';
@@ -188,20 +194,15 @@ function Get_FSW_Refund_Table()
     return $html;
 }
 //-----------------------------------------------------------------------------------------------------------
-function Build_FSW_Users($role, $status, $buttonType)
+function Build_FSW_Users($status, $role, $buttonType)
 {
-    $filter = array('order' => 'ASC', 'orderby' => 'display_name', 'role' => $role, 'meta_key' => 'fsw_status', 'meta_value' => $status);
-
-    foreach(get_users($filter) as $user)
+    foreach(Get_FSW_Users($status, $role) as $user)
     {
-        if(!in_array($user->ID, array('1','5','7')))
-        {
-                $html .= '<tr>';
-                $html .= "<td><a href='https://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
-                $html .= '<td>' . $user->user_email . '</td>';
-                $html .=  Get_FSW_User_Buttons($buttonType, $user->ID, $user->display_name, $user->user_email);
-                $html .= '</tr>';
-        }
+        $html .= '<tr>';
+        $html .= "<td><a href='https://furryskiweekend.com/profile/$user->ID' target='_blank'>$user->display_name</a></td>";
+        $html .= '<td>' . $user->user_email . '</td>';
+        $html .=  Get_FSW_User_Buttons($buttonType, $user->ID, $user->display_name, $user->user_email);
+        $html .= '</tr>';
     }
     return $html;
 }
