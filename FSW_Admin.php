@@ -361,20 +361,18 @@ function Send_Questionnaire()
                             </p>
                             <ul style='list-style-type:disc'>
                                     <li>Why do you want to attend FSW?</li>
-
                                     <li>Tell us a little about yourself.</li>
                                     <li>Will you be at least 21 years old by the first day of FSW?</li>
-                                    <li>Who do you know who is attending this year or who has attended in past years?</li>
+                                    <li>Who do you know who plans to attend or has attended in past years who will vouch for you personally?</li>
                                     <li>Do you ski, snowboard, both, or neither?</li>
                                     <li>Have you applied or attended in past years?</li>
                                     <li>Do you have a fursuit?</li>
                                     <li>Do you want to attend the entire event, or just a single day?</li>
                                     <li>Are you willing to assist with small tasks around the event?</li>
                                     <li>Are you interested in taking video/pictures during the event for our use?</li>
-                                    <li>Are you interested in teaching other how to ski/snowboard?</li>
                                     <li>Is there anyone attending who you have had negative experiences with or do not like?</li>
                                     <li>Have you read through the About section? (https://furryskiweekend.com/about/)</li>
-                                    <li>Have you filled in your profile, including your icon?</li>
+                                    <li>Have you filled in your profile, including your icon, irl photo, and fursuit photo?</li>
                                     <li>Are you renting a vehicle, or will you need transportation to FSW?</li>
                                     <li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
                                     <li>Recreational cannabis is legal in CO. Would its isolated use bother you?</li>
