@@ -1,6 +1,7 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-$FSW_Houses = array('None', 'Masters 4', 'Masters 7', 'Masters 22', 'Masters 64', 'Legends 10', 'Legends 11', 'Woods 36', 'Woods 15', 'Copper Springs 215', 'Copper Springs 227', 'The Complex', 'Off-Site');
+//'Masters 4', 'Masters 7', 'Masters 22', 'Masters 64', 'Legends 10', 'Legends 11', 'Legends 6', 'Woods 36', 'Woods 15', 'Copper Springs 215', 'Copper Springs 227', 'The Complex', 'Off-Site'
+$FSW_Houses = array('None', 'Masters 22', 'Legends 6', 'Legends 10', 'Legends 11', 'Woods 15', 'Woods 36', 'Copper Springs 215', 'Copper Springs 227', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 $FSW_AttendanceTypes = array('Full Event', "Daypass");
