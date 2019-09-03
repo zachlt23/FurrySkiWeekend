@@ -376,6 +376,12 @@ function Send_Questionnaire()
                         <li>Have you applied in previous years?</li>
                         <li>Will you be at least 21 years old by the first day of FSW?</li>
                         <li>Have you fully read through the About section? This is required. (https://furryskiweekend.com/about/)</li>
+                        <li>Have you fully filled in your profile? This helps us and others to know you better.</li>
+                        </ul>
+                    <li class='sectionHeader'>Transportation</li>
+                        <ul>
+                        <li>You are responsible for getting yourself to and from the event. Are you willing and able to do this?</li>
+                        <li>If you are driving (rented or not), are you interested in letting otheres attendess carpool with you to and from FSW?</li>
                         </ul>
                     <li class='sectionHeader'>Skiing</li>
                         <ul>
@@ -387,13 +393,8 @@ function Send_Questionnaire()
                     <li class='sectionHeader'>Helping Out and Giving Back</li>
                         <ul>
                         <li>FSW is a communal and paticipatory event. How might you exemplify these values in little ways?</li>
-                        <li>Are you a photographer or videographer? Are you interested in taking video/pics of the fursuit skiing for our use? Compensation is available</li>
+                        <li>Are you a photographer or videographer? Are you interested in taking video/pics of the fursuit skiing for our use? Compensation is available.</li>
                         <li>We are always looking for ways to improve our event. Are you willing to provide honest and constructive feedback to us?</li>
-                        </ul>
-                    <li class='sectionHeader'>Transportation</li>
-                        <ul>
-                        <li>You are responsible for getting yourself to and from the event. Are you willing and able to do this?</li>
-                        <li>If you are driving (rented or not), are you interested in letting otheres attendess carpool with you to and from FSW?</li>
                         </ul>
                 </ul>
                 Thank you for taking the time to respond<br>
