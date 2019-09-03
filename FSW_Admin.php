@@ -343,43 +343,64 @@ function Send_Questionnaire()
     $to = $email;
     $subject = $displayName . ', FSW would like to know more about you!';
     $message = "
-            <html>
-                    <head>
-                            <style>
-                                    h1 { text-align:center; text-decoration: underline; }
-                            </style>
-                    </head>
-                    <body>
-                            <h1>FSW Questionnaire</h1>
-                            <p> 
-                                    Thanks for applying to FSW!<br>
-                                    The purpose of this questionnaire is to identify whether or not
-                                    you would be a good fit for our event. We have very limited space 
-                                    and work very hard to create an environment where everyone attending
-                                    can feel comfortable and have a fantastic, unique, and memorable time. 
-                                    Please answer the following questions and email them back to us as soon as possible.
-                            </p>
-                            <ul style='list-style-type:disc'>
-                                    <li>Why do you want to attend FSW?</li>
-                                    <li>Tell us a little about yourself.</li>
-                                    <li>Will you be at least 21 years old by the first day of FSW?</li>
-                                    <li>Who do you know who plans to attend or has attended in past years who will vouch for you personally?</li>
-                                    <li>Do you ski, snowboard, both, or neither?</li>
-                                    <li>Have you applied or attended in past years?</li>
-                                    <li>Do you have a fursuit?</li>
-                                    <li>Do you want to attend the entire event, or just a single day?</li>
-                                    <li>Are you willing to assist with small tasks around the event?</li>
-                                    <li>Are you interested in taking video/pictures during the event for our use?</li>
-                                    <li>Is there anyone attending who you have had negative experiences with or do not like?</li>
-                                    <li>Have you read through the About section? (https://furryskiweekend.com/about/)</li>
-                                    <li>Have you filled in your profile, including your icon, irl photo, and fursuit photo?</li>
-                                    <li>Are you renting a vehicle, or will you need transportation to FSW?</li>
-                                    <li>If you rent a vehicle, are you willing to transport other attendees to and from FSW?</li>
-                                    <li>Recreational cannabis is legal in CO. Would its isolated use bother you?</li>
-                            </ul>
-                            www.furryskiweekend.com
-                    </body>
-            </html>
+        <html>
+            <head>
+                <style>
+                    h1 { text-align:center; text-decoration: underline; }
+                    .sectionHeader { text-decoration: underline; }
+                </style>
+            </head>
+            <body>
+                <h1>FSW Questionnaire</h1>
+                <p> 
+                    Thank you for applying to FSW!<br>
+                    The purpose of this questionnaire is to determine if you would be a good fit for our event. 
+                    We have very limited space, and work hard to create a comfortable, close-knit environment where everyone attending can have a fantastic, unique, and memorable experience.
+                    We want to accept new people who will give and get the most out of the event.
+                    Please answer the following questions and email them back to us as soon as possible.
+                </p>
+                <ul style='list-style-type:disc'>
+                    <li class='sectionHeader'>About You</li>
+                        <ul>
+                        <li>Why do you want to attend FSW?</li>
+                        <li>We want to get to know you better. Tell us about yourself.</li>
+                        <li>Can we trust you to be responsible and respectful towards all other attendees, the houses, and Copper Mountain?</li>
+                        <li>Who do you know who plans to attend, or has attended in past years, who can vouch for you personally?</li>
+                        <li>Is there anyone attending who you have had a negative experiences with, or has had a negative experience with you?</li>
+                        <li>Alcohol, and other recreational substances, are stronger at altitude, and FSW is at ~10,000ft. Will you partake responsibly?
+                        <li>Do you have any concerns or reservations about attending that we can address?</li>
+                        <li>Recreational cannabis is legal in CO. Would its isolated use be an issue for you?</li>
+                        </ul>
+                    <li class='sectionHeader'>Administrative</li>
+                        <ul>
+                        <li>Have you applied in previous years?</li>
+                        <li>Will you be at least 21 years old by the first day of FSW?</li>
+                        <li>Have you fully read through the About section? This is required. (https://furryskiweekend.com/about/)</li>
+                        </ul>
+                    <li class='sectionHeader'>Skiing</li>
+                        <ul>
+                        <li>Do you ski, snowboard, both, or neither?</li>
+                        <li>Rate your skill level on the mountain: Bunny, Green, Blue, Black, Double-Black</li>
+                        <li>Do you have a fursuit?</li>
+                        <li>Skiing in fursuit is very challenging. Do you plan on joining in, and if so, how will you prepare for it?</li>
+                        </ul>
+                    <li class='sectionHeader'>Helping Out and Giving Back</li>
+                        <ul>
+                        <li>FSW is a communal and paticipatory event. How might you exemplify these values in little ways?</li>
+                        <li>Are you a photographer or videographer? Are you interested in taking video/pics of the fursuit skiing for our use? Compensation is available</li>
+                        <li>We are always looking for ways to improve our event. Are you willing to provide honest and constructive feedback to us?</li>
+                        </ul>
+                    <li class='sectionHeader'>Transportation</li>
+                        <ul>
+                        <li>You are responsible for getting yourself to and from the event. Are you willing and able to do this?</li>
+                        <li>If you are driving (rented or not), are you interested in letting otheres attendess carpool with you to and from FSW?</li>
+                        </ul>
+                </ul>
+                Thank you for taking the time to respond<br>
+                -FSW Staff<br>
+                www.furryskiweekend.com
+            </body>
+        </html>
     ";
     //-----------------------------------------------------------------------------------------------------------
     //FSW_HTML_Email($to, $subject, $message);
@@ -399,29 +420,33 @@ function Send_FSW_Verification()
     $to = $verifier[1];
     $subject = "$verifier[0], can you vouch for $name";
     $message = "
-            <html>
-                    <head>
-                            <style>
-                                    h1 { text-align:center; text-decoration: underline; }
-                            </style>
-                    </head>
-                    <body>
-                            <h1>FSW New Registrant Verification</h1>
-                            <p> 
-                                    $name listed you as a reference. Could you answer the following?
-                                    (All responses will remain confidential)
-                            </p>
-                            <ul style='list-style-type:disc'>
-                                    <li>Do you personally know $name?</li>
-                                    <li>Do you trust $name to act responsibly and respectfully?</li>
-                                    <li>Do you feel $name would fit in well at FSW?</li>
-                                    <li>Can you tell us a bit about $name in your own words?</li>
-                                    <li>Does $name have any issues with anyone you know at FSW?</li>
-                                    <li>Is there any reason you would suggest we not invite $name?</li>
-                            </ul>
-                            www.furryskiweekend.com
-                    </body>
-            </html>
+        <html>
+            <head>
+                <style>
+                    h1 { text-align:center; text-decoration: underline; }
+                </style>
+            </head>
+            <body>
+                <h1>FSW New Registrant Verification</h1>
+                <p> 
+                    $name listed you as someone who could vouch for them personally.<br>
+                    Please answer the following questions for us honestly and candidly.<br>
+                    (All responses will remain strictly confidential)
+                </p>
+                <ul style='list-style-type:disc'>
+                    <li>Do you personally know $name, and vouch for them?</li>
+                    <li>Do you trust $name to act responsibly and respectfully towards all other attendees, the houses, and Copper Mountain?</li>
+                    <li>Do you trust that $name can partake responsibly in all recreational substances?</li>
+                    <li>Do you feel $name would be a good fit for FSW, and get a lot out of the experience?</li>
+                    <li>Can you tell us a bit about $name in your own words?</li>
+                    <li>As far as you know, does $name have any issues with anyone at FSW, or does anyone have any issues with them?</li>
+                    <li>Do you have any reservations or concerns of any kind regarding us inviting $name?</li>
+                </ul>
+                Thank you for taking the time to respond<br>
+                -FSW Staff<br>
+                www.furryskiweekend.com
+            </body>
+        </html>
     ";
     //-----------------------------------------------------------------------------------------------------------
     //FSW_HTML_Email($to, $subject, $message);
