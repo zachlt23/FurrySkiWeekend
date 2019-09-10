@@ -2,7 +2,8 @@
 //-----------------------------------------------------------------------------------------------------------
 //Include statement
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
-include('/wordpress/core/4.9.8/wp-includes/pluggable.php');
+//THIS HAS TO BE UPDATED WITH EACH NEW VERSION! THIS IS AWFUL! FIX IT!
+include('/wordpress/core/5.2.3/wp-includes/pluggable.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Verification()
 {
@@ -398,7 +399,7 @@ function Send_Questionnaire()
                         </ul>
                 </ul>
                 Thank you for taking the time to respond<br>
-                -FSW Staff<br>
+                FSW Staff<br>
                 www.furryskiweekend.com
             </body>
         </html>
@@ -444,7 +445,7 @@ function Send_FSW_Verification()
                     <li>Do you have any reservations or concerns of any kind regarding us inviting $name?</li>
                 </ul>
                 Thank you for taking the time to respond<br>
-                -FSW Staff<br>
+                FSW Staff<br>
                 www.furryskiweekend.com
             </body>
         </html>

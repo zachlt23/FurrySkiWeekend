@@ -172,10 +172,13 @@ if(isset($_REQUEST['refund']))
 	FSW_Refund();
 }
 
+//This is somehow getting called when saving profiles
+/*
 if(isset($_REQUEST['email']))
 {	
 	Email_FSW_Users();
 }
+ */
 
 if(isset($_REQUEST['FSW_Verification']))
 {
