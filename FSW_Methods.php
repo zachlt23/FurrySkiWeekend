@@ -281,15 +281,22 @@ function Get_FSW_StatusMessage($status)
             case "Pending":
                 return "Your request to attend " . $fsw . " has been received and is being reviewed";
             case "Waitlist":
-                return $fsw . " is currently full. You have been added to our waitlist and will be notified if a space becomes available.";
+                return "You were not selected for ". $fsw . ", but you have been added to our waiting list."
+                    . "<br><br><b><u>What to expect:<u><b>"
+                    . "<br>Every year, for a variety of reason, people who have been approved cannot attend, and as spaces become available we will fill them from the waitlist."
+                    . "<br>Most cancelations will happen in the first four weeks after approvals have been sent, including those who do not end up paying in that time."
+                    . "<br>Once that window has passed, we do still tend to have a few people drop, so there is still a chance of being selected."
+                    . "<br>Note: Unless approved, you will remain on the wait-list indefinitely."
+                    . "<br><br>No matter the outcome, we want to thank you for applying, and please know that you can apply again next year."
+                    . "- FSW Staff";
             case "Approved - Payment Required":
-                return "You have been approved for " . $fsw . ". You can now pay to secure your spot. (https://furryskiweekend.com/shop/)";
+                return "You have been approved for " . $fsw . ". You have four weeks to complete your paymet to secure your spot. (https://furryskiweekend.com/shop/)";
             case "Approved for Daypass - Payment Required":
                 return  "You have been approved to purchase a " . $fsw . " daypass. (https://furryskiweekend.com/shop/)";
             case "Approved - Paid":
-                return "You are approved and paid for " . $fsw . ". We look forward to having you! Please join our private FSW telegram chat: https://t.me/joinchat/BWWi5j_wvUY8h-GtFMNr9g";
+                return "You are approved and paid for " . $fsw . ". We look forward to having you! Please join our private FSW telegram chat: https://t.me/joinchat/BWWi5j_wvUbdApEaZfsSPA";
             case "Declined":
-                return "We regret to inform you that you will not be able to attend $fsw";
+                return "You were not selected for " . $fsw . ". Thank you for applying.";
             case "Not Registered":
                 return "You have not yet requested to attend " . $fsw;
             case "Refund Requested":
