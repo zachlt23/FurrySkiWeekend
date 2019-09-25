@@ -281,14 +281,16 @@ function Get_FSW_StatusMessage($status)
             case "Pending":
                 return "Your request to attend " . $fsw . " has been received and is being reviewed";
             case "Waitlist":
-                return "You were not selected for ". $fsw . ", but you have been added to our waiting list."
-                    . "<br><br><b><u>What to expect:<u><b>"
-                    . "<br>Every year, for a variety of reason, people who have been approved cannot attend, and as spaces become available we will fill them from the waitlist."
-                    . "<br>Most cancelations will happen in the first four weeks after approvals have been sent, including those who do not end up paying in that time."
-                    . "<br>Once that window has passed, we do still tend to have a few people drop, so there is still a chance of being selected."
-                    . "<br>Note: Unless approved, you will remain on the wait-list indefinitely."
-                    . "<br><br>No matter the outcome, we want to thank you for applying, and please know that you can apply again next year."
-                    . "- FSW Staff";
+                return "You were not selected for ". $fsw . ", but you have been added to our waitlist."
+                    . "<br><br><b><u>What to expect:</u></b>"
+                    . "<ul style='list-style-type:disc'>"
+                    . "<li>Every year, for a variety of reasons, people who have been approved cannot attend. As those spaces become available we will fill them from the waitlist."
+                    . "<li>Most cancelations will happen in the first four weeks after approvals have been sent out, which will include anyone who has not paid in that time."
+                    . "<li>Once that window has passed, we do still tend to have a few people drop out, so there is still a chance of being selected."
+                    . "<li>Note: Unless approved, you will remain on the wait-list indefinitely."
+                    . "</ul>"
+                    . "<br>No matter the outcome, we want to thank you for applying, and please know that you can apply again next year."
+                    . "<br>- FSW Staff";
             case "Approved - Payment Required":
                 return "You have been approved for " . $fsw . ". You have four weeks to complete your paymet to secure your spot. (https://furryskiweekend.com/shop/)";
             case "Approved for Daypass - Payment Required":

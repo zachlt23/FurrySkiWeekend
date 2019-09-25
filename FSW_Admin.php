@@ -451,7 +451,6 @@ function Send_FSW_Verification()
         </html>
     ";
     //-----------------------------------------------------------------------------------------------------------
-    //FSW_HTML_Email($to, $subject, $message);
     FSW_HTML_WP_Email($to, $subject, $message);
     //-----------------------------------------------------------------------------------------------------------
 }
@@ -532,7 +531,6 @@ function Send_Updated_Housing_Email($userID, $displayName, $email, $roommate, $h
     $message .= 'Bed: ' . $bed . "\r\n";
     $message .= "\r\n" . 'https://furryskiweekend.com/registration-and-status';
     //-----------------------------------------------------------------------------------------------------------
-    //FSW_Email($to, $subject, $message);
     FSW_WP_Email($to, $subject, $message);
     //-----------------------------------------------------------------------------------------------------------
 }
@@ -545,13 +543,14 @@ function Send_Updated_Status_Email($userID, $displayName, $email)
     $to = $email;
     $subject = $displayName . ', your new status for FSW-' . FSW_Registration_Year() . ' is: ' . $newStatus;
     //-----------------------------------------------------------------------------------------------------------
-    $message .= 'User: ' . $displayName . "\r\n";
-    $message .= 'New Status: ' . $newStatus . "\r\n";
-    $message .= 'Description: ' . Get_FSW_StatusMessage($newStatus)  . "\r\n";
-    $message .= "\r\n" . 'https://furryskiweekend.com/registration-and-status';
+    $message .= '<html><body>';
+    $message .= '<u><b>User:</b></u> ' . $displayName;
+    $message .= '<br><u><b>New Status:</b></u> ' . $newStatus;
+    $message .= '<br><u><b>Description:</b></u> ' . Get_FSW_StatusMessage($newStatus);
+    $message .= '<br>https://furryskiweekend.com/registration-and-status';
+    $message .= "</body></html>";
     //-----------------------------------------------------------------------------------------------------------
-    //FSW_Email($to, $subject, $message);
-    FSW_WP_Email($to, $subject, $message);
+    FSW_HTML_WP_Email($to, $subject, $message);
     //-----------------------------------------------------------------------------------------------------------
 } 
 //-----------------------------------------------------------------------------------------------------------
@@ -589,7 +588,6 @@ function Email_FSW_Users()
     //-----------------------------------------------------------------------------------------------------------
     foreach (explode(",", $emails) as $email)
     {
-        //FSW_Email($email, $subject, $message);
         FSW_WP_Email($email, $subject, $message);
     }
     //-----------------------------------------------------------------------------------------------------------
