@@ -3,7 +3,7 @@
 //Include statement
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
 //THIS HAS TO BE UPDATED WITH EACH NEW VERSION! THIS IS AWFUL! FIX IT!
-include('/wordpress/core/5.2.3/wp-includes/pluggable.php');
+include('/wordpress/core/5.2.4/wp-includes/pluggable.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Verification()
 {
