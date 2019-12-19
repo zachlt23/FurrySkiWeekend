@@ -1,9 +1,9 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-//Include statement
+//Includes the methods
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
-//THIS HAS TO BE UPDATED WITH EACH NEW VERSION! THIS IS AWFUL! FIX IT!
-include('/wordpress/core/5.2.4/wp-includes/pluggable.php');
+//Includes a number of WP functions. We use this for email
+include('/wordpress/core/' . $wp_version . '/wp-includes/pluggable.php');
 //-----------------------------------------------------------------------------------------------------------
 function Get_FSW_Verification()
 {
