@@ -1,12 +1,11 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-//'Masters 4', 'Masters 7', 'Masters 22', 'Masters 64', 'Legends 10', 'Legends 11', 'Legends 6', 'Woods 36', 'Woods 15', 'Copper Springs 215', 'Copper Springs 227', 'The Complex', 'Off-Site'
-$FSW_Houses = array('None', 'Masters 22', 'Legends 6', 'Legends 10', 'Legends 11', 'Woods 15', 'Woods 36', 'Copper Springs 215', 'Copper Springs 227', 'Off-Site');
+$FSW_Houses = array('None', 'Masters 22', 'Masters 11', 'Legends 6', 'Legends 10', 'Legends 11', 'Woods 15', 'Woods 36', 'Off-Site');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 $FSW_AttendanceTypes = array('Full Event', "Daypass");
 $FSW_DietaryRestrictions = array('None','Allergy - Dairy','Allergy - Eggs','Allergy - Fish','Allergy - Gluten','Allergy - Peanuts','Allergy - Shellfish','Allergy - Soy','Allergy - Tree Nuts','Allergy - Other',
-    'Restriction - Kosher','Restriction - Pescatarian','Restriction - Vegetarian','Restriction - Vegetarian','Restriction - Vegan');
+    'Restriction - Kosher','Restriction - Pescatarian','Restriction - Vegetarian','Restriction - Keto','Restriction - Vegan');
 //-----------------------------------------------------------------------------------------------------------
 function FSW_Registration_Year()
 {
