@@ -27,7 +27,8 @@ require_once(plugin_dir_path(__FILE__) . 'php/FSW_Status.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Preferences.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_Methods.php');
 require_once(plugin_dir_path(__FILE__) . 'php/FSW_TravelTimes.php');
-include('wp-includes/pluggable.php');
+//include('wp-includes/pluggable.php');
+include('/wordpress/core/' . $wp_version . '/wp-includes/pluggable.php');
 //-----------------------------------------------------------------------------------------------------------
 function Activate_FSW_Registration() { }
 function Uninstall_FSW_Registration() { }
