@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------------------------------
-$FSW_Houses = array('None', 'Masters 22', 'Masters 11', 'Legends 6', 'Legends 10', 'Legends 11', 'Woods 15', 'Woods 36', 'Off-Site');
+$FSW_Houses = array('None', 'Anaconda 101', 'Anaconda 102', 'Anaconda 103', 'Copper Springs 227', 'East Village VRBO', 'Masters 22', 'Snowflake 411', 'Woods 19', 'Woods 34', 'Village Point 202');
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
 $FSW_AttendanceTypes = array('Full Event', "Daypass");
