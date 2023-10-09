@@ -1,10 +1,10 @@
 <?php
-//-----------------------------------------------------------------------------------------------------------
+
 //Includes the methods
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
 //Includes a number of WP functions. We use this for email
 include('/wordpress/core/' . $wp_version . '/wp-includes/pluggable.php');
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Verification()
 {
     $html .= '<form class="FSW_Verification" method="post">';
@@ -25,7 +25,7 @@ function Get_FSW_Verification()
     $html .= '</form>';
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Mass_Email()
 {
     $emails = Get_FSW_Emails();
@@ -48,7 +48,7 @@ function Get_FSW_Mass_Email()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Pending_Table()
 {
     $status = 'Pending';
@@ -74,7 +74,7 @@ function Get_FSW_Pending_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Approved_Daypass_Table()
 {
     $status = 'Approved for Daypass - Payment Required';
@@ -97,7 +97,7 @@ function Get_FSW_Approved_Daypass_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Approved_Table()
 {
     $status = 'Approved - Payment Required';
@@ -120,7 +120,7 @@ function Get_FSW_Approved_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Paid_Table()
 {
     $status = 'Approved - Paid';
@@ -148,7 +148,7 @@ function Get_FSW_Paid_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Waitlist_Table()
 {
     $status = 'Waitlist';
@@ -171,7 +171,7 @@ function Get_FSW_Waitlist_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Refund_Table()
 {
     $status = 'Refund Requested';
@@ -194,7 +194,7 @@ function Get_FSW_Refund_Table()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Build_FSW_Users($status, $role, $buttonType)
 {
     foreach(Get_FSW_Users($status, $role) as $user)
@@ -219,12 +219,12 @@ function Get_FSW_Table_Input($prefix)
     
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
 {
-    //-----------------------------------------------------------------------------------------------------------
+
     $parameters = Get_FSW_Encoded_Parameters($buttonType, $userID, $displayName, $email);
-    //-----------------------------------------------------------------------------------------------------------
+
     switch($buttonType)
     {
             case "p":
@@ -241,9 +241,8 @@ function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
             default:
                     return "";
     }
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Pending_Buttons($parameters, $userID)
 {
     $html .= Get_FSW_Status_Button('Approve', $parameters);
@@ -262,7 +261,7 @@ function Get_FSW_Pending_Buttons($parameters, $userID)
     
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Waitlist_Buttons($parameters)
 {
     $html .= Get_FSW_Status_Button('Approve', $parameters);
@@ -270,7 +269,7 @@ function Get_FSW_Waitlist_Buttons($parameters)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Paid_Buttons($userID, $parameters)
 {
     $html .= '<td>' . get_user_meta($userID, 'fsw_house_preference', true) . '</td>';
@@ -283,21 +282,21 @@ function Get_FSW_Paid_Buttons($userID, $parameters)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Approved_Buttons($parameters)
 {
     $html .= Get_FSW_Status_Button('Paid', $parameters);
     $html .= Get_FSW_Status_Button('Waitlist', $parameters);
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Refund_Buttons($parameters)
 {
     $html .= Get_FSW_Status_Button('Refunded', $parameters);
     $html .= Get_FSW_Status_Button('Rescinded', $parameters);
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Encoded_Parameters($type, $userID, $displayName, $email)
 {
     $encoded_ID = base64_encode($userID);
@@ -311,7 +310,7 @@ function Get_FSW_Encoded_Parameters($type, $userID, $displayName, $email)
 
     return $parameters;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Status_Button($name, $parameters)
 {
     $html .= '<td>';
@@ -319,7 +318,7 @@ function Get_FSW_Status_Button($name, $parameters)
     $html .= '</td>';
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Reset_Button()
 {
     $html .= '<form method="post">';
@@ -333,14 +332,14 @@ function Get_FSW_Reset_Button()
     $html .= '</form>';
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Send_Questionnaire()
 {
-    //-----------------------------------------------------------------------------------------------------------
+
     $userID = base64_decode($_REQUEST['i']);
     $displayName = base64_decode($_REQUEST['d']);
     $email = base64_decode($_REQUEST['e']);
-    //-----------------------------------------------------------------------------------------------------------
+
     $to = $email;
     $subject = $displayName . ', FSW would like to know more about you!';
     $message = "
@@ -352,66 +351,25 @@ function Send_Questionnaire()
                 </style>
             </head>
             <body>
-                <h1>FSW Questionnaire</h1>
-                <p> 
-                    Thank you for applying to FSW!<br>
-                    The purpose of this questionnaire is to determine if you would be a good fit for our event. 
-                    We have very limited space, and work hard to create a comfortable, close-knit environment where everyone attending can have a fantastic, unique, and memorable experience.
-                    We want to accept new people who will give and get the most out of the event.
-                    Please answer the following questions and email them back to us as soon as possible.
+                <h1>
+                    <a herf='https://docs.google.com/forms/d/1vCyEmraL8zg8478crDPaXHVU2htZlTIH7fDX7GpFZS8/edit'>FSW Questionnaire</a>
+                </h1>
+                <p>
+                    Please complete as soon as possible.
                 </p>
-                <ul style='list-style-type:disc'>
-                    <li class='sectionHeader'>About You</li>
-                        <ul>
-                        <li>Why do you want to attend FSW?</li>
-                        <li>We want to get to know you better. Tell us about yourself.</li>
-                        <li>Can we trust you to be responsible and respectful towards all other attendees, the houses, and Copper Mountain?</li>
-                        <li>Who do you know who plans to attend, or has attended in past years, who can vouch for you personally?</li>
-                        <li>Is there anyone attending who you have had a negative experiences with, or has had a negative experience with you?</li>
-                        <li>Alcohol, and other recreational substances, are stronger at altitude, and FSW is at ~10,000ft. Will you partake responsibly?
-                        <li>Do you have any concerns or reservations about attending that we can address?</li>
-                        <li>Recreational cannabis is legal in CO. Would its isolated use be an issue for you?</li>
-                        </ul>
-                    <li class='sectionHeader'>Administrative</li>
-                        <ul>
-                        <li>Have you applied in previous years?</li>
-                        <li>Will you be at least 21 years old by the first day of FSW?</li>
-                        <li>Have you fully read through the About section? This is required. (https://furryskiweekend.com/about/)</li>
-                        <li>Have you fully filled in your profile? This helps us and others to know you better.</li>
-                        </ul>
-                    <li class='sectionHeader'>Transportation</li>
-                        <ul>
-                        <li>You are responsible for getting yourself to and from the event. Are you willing and able to do this?</li>
-                        <li>If you are driving (rented or not), are you interested in letting otheres attendess carpool with you to and from FSW?</li>
-                        </ul>
-                    <li class='sectionHeader'>Skiing</li>
-                        <ul>
-                        <li>Do you ski, snowboard, both, or neither?</li>
-                        <li>Rate your skill level on the mountain: Bunny, Green, Blue, Black, Double-Black</li>
-                        <li>Do you have a fursuit?</li>
-                        <li>Skiing in fursuit is very challenging. Do you plan on joining in, and if so, how will you prepare for it?</li>
-                        </ul>
-                    <li class='sectionHeader'>Helping Out and Giving Back</li>
-                        <ul>
-                        <li>FSW is a communal and paticipatory event. How might you exemplify these values in little ways?</li>
-                        <li>Are you a photographer or videographer? Are you interested in taking video/pics of the fursuit skiing for our use? Compensation is available.</li>
-                        <li>We are always looking for ways to improve our event. Are you willing to provide honest and constructive feedback to us?</li>
-                        </ul>
-                </ul>
-                Thank you for taking the time to respond<br>
-                FSW Staff<br>
+
+                Thank you for applying to FSW!<br>
+                -FSW Staff<br>
                 www.furryskiweekend.com
             </body>
         </html>
     ";
-    //-----------------------------------------------------------------------------------------------------------
-    //FSW_HTML_Email($to, $subject, $message);
+
     FSW_HTML_WP_Email($to, $subject, $message);
-    //-----------------------------------------------------------------------------------------------------------
+
     update_user_meta($userID, 'fsw_qsent', 'true');
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Send_FSW_Verification()
 {
     //-----------------------------------------------------------------------------------------------------------
@@ -450,14 +408,13 @@ function Send_FSW_Verification()
             </body>
         </html>
     ";
-    //-----------------------------------------------------------------------------------------------------------
+
     FSW_HTML_WP_Email($to, $subject, $message);
-    //-----------------------------------------------------------------------------------------------------------
+
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Update_FSW_Status()
 {
-    //-----------------------------------------------------------------------------------------------------------
     $userID = base64_decode($_REQUEST['i']);
     $displayName = base64_decode($_REQUEST['d']);
     $email = base64_decode($_REQUEST['e']);
@@ -478,7 +435,7 @@ function Update_FSW_Status()
     }
 
     $type = $_REQUEST['approval'];
-    //-----------------------------------------------------------------------------------------------------------
+
     switch($type)
     {
         case "Approve":
@@ -514,52 +471,47 @@ function Update_FSW_Status()
                 update_user_meta($userID, 'fsw_status', 'Approved - Paid');
                 break;
     }
-    //-----------------------------------------------------------------------------------------------------------
+
     Send_Updated_Status_Email($userID, $displayName, $email);
-    //-----------------------------------------------------------------------------------------------------------
+
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Send_Updated_Housing_Email($userID, $displayName, $email, $roommate, $house, $bed)
 {
-    //-----------------------------------------------------------------------------------------------------------
     $to = $email;
     $subject = $displayName . ', your FSW-' . FSW_Registration_Year() . ' housing info has been updated';
-    //-----------------------------------------------------------------------------------------------------------
+
     $message .= 'User: ' . $displayName . "\r\n";
     $message .= 'Roommate: ' . $roommate . "\r\n";
     $message .= 'House: ' . $house . "\r\n";
     $message .= 'Bed: ' . $bed . "\r\n";
     $message .= "\r\n" . 'https://furryskiweekend.com/registration-and-status';
-    //-----------------------------------------------------------------------------------------------------------
+
     FSW_WP_Email($to, $subject, $message);
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Send_Updated_Status_Email($userID, $displayName, $email)
 {
-    //-----------------------------------------------------------------------------------------------------------
     $newStatus = get_user_meta($userID, 'fsw_status', true);
-    //-----------------------------------------------------------------------------------------------------------
+
     $to = $email;
     $subject = $displayName . ', your new status for FSW-' . FSW_Registration_Year() . ' is: ' . $newStatus;
-    //-----------------------------------------------------------------------------------------------------------
+
     $message .= '<html><body>';
     $message .= '<u><b>User:</b></u> ' . $displayName;
     $message .= '<br><u><b>New Status:</b></u> ' . $newStatus;
     $message .= '<br><u><b>Description:</b></u> ' . Get_FSW_StatusMessage($newStatus);
     $message .= '<br>https://furryskiweekend.com/registration-and-status';
     $message .= "</body></html>";
-    //-----------------------------------------------------------------------------------------------------------
+
     FSW_HTML_WP_Email($to, $subject, $message);
-    //-----------------------------------------------------------------------------------------------------------
-} 
-//-----------------------------------------------------------------------------------------------------------
+}
+
 function Reset_FSW_Registration_Status()
-{	
-    //-----------------------------------------------------------------------------------------------------------
+{
     //Exclude admins Tek, Dire, Tuaolo
     $filter = array('exclude' => array('1','5','7'), 'fields' => array('ID'));
-    //-----------------------------------------------------------------------------------------------------------
+
     foreach ( get_users($filter) as $user )
     {
         update_user_meta($user->ID, 'fsw_status', 'Not Registered');
@@ -576,36 +528,32 @@ function Reset_FSW_Registration_Status()
         update_user_meta($user->ID, 'FSW_Roommate', '');
         update_user_meta($user->ID, 'FSW_AttendenceType', '');
     }
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Email_FSW_Users()
 {
-    //-----------------------------------------------------------------------------------------------------------
     $subject = $_REQUEST['subject'];
     $message = $_REQUEST['message'];
     $emails = $_REQUEST['emails'];
-    //-----------------------------------------------------------------------------------------------------------
+
     foreach (explode(",", $emails) as $email)
     {
         FSW_WP_Email($email, $subject, $message);
     }
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_DietaryRestrictionGrid()
 {
-    //-----------------------------------------------------------------------------------------------------------
     $restrictions = array();
-    //-----------------------------------------------------------------------------------------------------------
+
     foreach ($GLOBALS['FSW_DietaryRestrictions'] as $item)
     {
         $restrictions[$item] = 0;
     }
-    //-----------------------------------------------------------------------------------------------------------
+
     //Remove "None"
     unset($restrictions['None']);
-    //-----------------------------------------------------------------------------------------------------------
+
     foreach ( Get_AttendingUsers() as $user )
     {
         $restrictionItem = get_user_meta($user->ID, 'FSW_Dietary_Restrictions', true);
@@ -615,7 +563,7 @@ function Get_FSW_DietaryRestrictionGrid()
             $restrictions[$restrictionItem] += 1;
         }
     }
-    //-----------------------------------------------------------------------------------------------------------
+
     $html .= '<table class="FSW_DietaryRestrictions">';
     $html .= '<tr>';
     $html .= '<th>Restriction</th>';
@@ -631,8 +579,7 @@ function Get_FSW_DietaryRestrictionGrid()
     }
 
     $html .= '</table>';
-    //-----------------------------------------------------------------------------------------------------------
+
     return $html;
-    //-----------------------------------------------------------------------------------------------------------
 }
 ?>
