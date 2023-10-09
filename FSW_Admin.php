@@ -346,18 +346,13 @@ function Send_Questionnaire()
         <html>
             <head>
                 <style>
-                    h1 { text-align:center; text-decoration: underline; }
-                    .sectionHeader { text-decoration: underline; }
                 </style>
             </head>
             <body>
-                <h1>
-                    <a herf='https://forms.gle/vb7uwGyeuHu8JTFF7'>FSW Questionnaire</a>
-                </h1>
                 <p>
-                    Please complete as soon as possible.
+                    Please complete as soon as possible: <a href='https://forms.gle/vb7uwGyeuHu8JTFF7'>FSW Questionnaire</a>
                 </p>
-
+    
                 Thank you for applying to FSW!<br>
                 -FSW Staff<br>
                 www.furryskiweekend.com
