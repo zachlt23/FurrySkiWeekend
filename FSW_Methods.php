@@ -1,40 +1,44 @@
 <?php
-//-----------------------------------------------------------------------------------------------------------
-$FSW_Houses = array('None', 'Anaconda 101', 'Anaconda 102', 'Anaconda 103', 'Copper Springs 227', 'East Village VRBO', 'Masters 22', 'Snowflake 411', 'Village Point 202', 'Woods 19', 'Woods 34');
+
+$FSW_Houses = array('None', '1 - Murr Purr Prime (22)', '2 - The Softest Spot (6)', '3 - Far Space Spice Outpost (9)', '4 - Convergence Station Annex (7)', '5 - Only Fire Lives Here (8)', '6 - The House of Screams (5)', '7 - ASB Dorms (6)');
+
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
+
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
+
 $FSW_AttendanceTypes = array('Full Event', "Daypass");
+
 $FSW_DietaryRestrictions = array('None','Allergy - Dairy','Allergy - Eggs','Allergy - Fish','Allergy - Gluten','Allergy - Peanuts','Allergy - Shellfish','Allergy - Soy','Allergy - Tree Nuts','Allergy - Other',
     'Restriction - Kosher','Restriction - Pescatarian','Restriction - Vegetarian','Restriction - Keto','Restriction - Vegan');
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_Registration_Year()
 {
     return (date("m") > 2) ? date("Y") + 1 : date("Y");
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Is_FSW_Registration_Open()
 {
     return ((date("m") <= 2) || (date("m") >= 9));
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_Can_Register($userID)
 {
     $status = get_user_meta($userID, 'fsw_status', true );
     return ($status == 'Not Registered') && (Is_FSW_Registration_Open());
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_Set_Default_Status_If_Needed($userID)
 {
     $status = get_user_meta($userID, 'fsw_status', true );
     if(($status == '') || ($status == 'Please Select'))
             update_user_meta($userID, 'fsw_status', 'Not Registered');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_Can_Request_Refund($userID)
 {
     return (get_user_meta($userID, 'fsw_status', true ) == "Approved - Paid");
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Change_Role($userID, $newRole)
 {
     $user = new WP_User($userID);
@@ -46,7 +50,7 @@ function Change_Role($userID, $newRole)
             $user->add_role($newRole);
     }
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_Email($email_to, $subject, $message)
 {
     $headers = 'From: FSW Admin <registration@furryskiweekend.com>' . "\r\n";
@@ -55,7 +59,7 @@ function FSW_Email($email_to, $subject, $message)
 
     mail($email_to, $subject, $message, $headers, $additional);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_WP_Email($email_to, $subject, $message)
 {
     $headers[] = 'From: FSW Admin <registration@furryskiweekend.com>' . "\r\n";
@@ -63,7 +67,7 @@ function FSW_WP_Email($email_to, $subject, $message)
 
     wp_mail($email_to, $subject, $message, $headers);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_HTML_Email($email_to, $subject, $message)
 {
     $headers = 'From: FSW Admin <registration@furryskiweekend.com>' . "\r\n";
@@ -73,7 +77,7 @@ function FSW_HTML_Email($email_to, $subject, $message)
 
     mail($email_to, $subject, $message, $headers, $additional);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_HTML_WP_Email($email_to, $subject, $message)
 {
     $headers[] = 'From: FSW Registration <registration@furryskiweekend.com>';
@@ -82,7 +86,7 @@ function FSW_HTML_WP_Email($email_to, $subject, $message)
 
     $response = wp_mail($email_to, $subject, $message, $headers);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function FSW_BCC_Email($emails, $subject, $message)
 {
     $to = "registration@furryskiweekend.com";
@@ -93,7 +97,7 @@ function FSW_BCC_Email($emails, $subject, $message)
     
     mail($to, $subject, $message, $headers, $additional);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Create_Header_Row($name, $value)
 {
     $html .= '<tr>';
@@ -102,20 +106,20 @@ function Create_Header_Row($name, $value)
     $html .= '</tr>';
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_DietaryRestrictions($userID)
 {
     $restriction = get_user_meta($userID, 'FSW_Dietary_Restrictions', true);
     return Get_FSW_Select($GLOBALS['FSW_DietaryRestrictions'],$restriction, 'select_restriction_pref','restriction_pref');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 //This is for the preferences page
 function Get_House_Prefs($userID)
 {
     $house = get_user_meta($userID, 'fsw_house_preference', true);
     return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , 'select_house_pref', 'house_pref');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 //This is for the Admin page
 function Get_Houses_Select($userID)
 {
@@ -123,26 +127,26 @@ function Get_Houses_Select($userID)
     $house = get_user_meta($userID, 'fsw_house', true);
     return Get_FSW_Select($GLOBALS['FSW_Houses'], $house , $id, 'houses');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_Airline_Select($userID)
 {
     $airline = get_user_meta($userID, 'FSW_Airline', true);
     return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_Attendance_Select($userID)
 {
     $attendance = get_user_meta($userID, 'FSW_AttendanceType', true);
     return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'attendance');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_Beds_Select($userID)
 {
     $id = 'select_bed_' . $userID;
     $bed = get_user_meta($userID, 'fsw_bed', true);
     return Get_FSW_Select($GLOBALS['FSW_Beds'], $bed, $id, 'beds');
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_Roommates_Select($userID)
 {
     $id = 'select_roommate_' . $userID;
@@ -166,7 +170,7 @@ function Get_Roommates_Select($userID)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 {
     $html .= '<select id=' . $id . ' name=' . $name . ' ' . ($disabled ? "disabled" : "") . '>';
@@ -180,7 +184,7 @@ function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
     $html .= '</select>';
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_SO_Select($userID)
 {
     $filter = array('fields' => array('display_name'));
@@ -195,7 +199,7 @@ function Get_SO_Select($userID)
     $so = get_user_meta($userID, 'FSW_SO', true);
     return Get_FSW_Select($values, $so, "select_so", "significantOtter");
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_User_Select()
 {
     $html .= '<select id="select_roommates">';
@@ -208,7 +212,7 @@ function Get_User_Select()
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_AttendingUsers()
 {
     $filter = array('fields' => array('display_name','ID'),
@@ -220,13 +224,13 @@ function Get_AttendingUsers()
     
     return get_users($filter);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Users($status, $role)
 {
     $user_query = Get_FSW_UserFilter($status, $role);
     return get_users($user_query);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_UserFilter($status, $role)
 {
     return  array('role' => $role,
@@ -237,7 +241,6 @@ function Get_FSW_UserFilter($status, $role)
                   'order' => 'ASC', 
                   'fields' => array('ID','display_name','user_email'));
 }
-//-----------------------------------------------------------------------------------------------------------
 
 function Get_User_Email_Select($id)
 {
@@ -251,7 +254,7 @@ function Get_User_Email_Select($id)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Emails()
 {
     $emails = array();
@@ -262,19 +265,19 @@ function Get_FSW_Emails()
     }
     return implode(",",$emails);
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Status_Count($status, $role)
 {
     $filter = Get_FSW_UserFilter($status, $role);
     $user_query = new WP_User_Query($filter); 
     return $user_query->get_total();
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_StatusMessage($status)
 {
-    //-----------------------------------------------------------------------------------------------------------
+
     $fsw = "FSW-" . FSW_Registration_Year();
-    //-----------------------------------------------------------------------------------------------------------
+
     switch($status)
     {
             case "Pending":
@@ -305,9 +308,8 @@ function Get_FSW_StatusMessage($status)
             default:
                 return "N/A";
     }
-    //-----------------------------------------------------------------------------------------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_MilitaryTime_Select($id, $currentValue)
 {
     $html .= '<select id=' . $id . '>';
@@ -325,8 +327,8 @@ function Get_MilitaryTime_Select($id, $currentValue)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
-function Write_FSW_Log($log)  
+
+function Write_FSW_Log($log)
 {
     if (is_array($log) || is_object($log)) 
     {
@@ -337,5 +339,5 @@ function Write_FSW_Log($log)
        error_log($log, 0);
     }
  }
-//-----------------------------------------------------------------------------------------------------------
+
 ?>

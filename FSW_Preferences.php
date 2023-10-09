@@ -1,25 +1,23 @@
 <?php
-//-----------------------------------------------------------------------------------------------------------
+
 require_once(plugin_dir_path(__FILE__) . 'FSW_Methods.php');
-//-----------------------------------------------------------------------------------------------------------
+
 function Set_FSW_Preferences()
 {
-    //---------------------------
     $roommates = base64_decode($_REQUEST['r']);
     $house = base64_decode($_REQUEST['h']);
     $userID = base64_decode($_REQUEST['i']);
     $restriction = base64_decode($_REQUEST['dr']);
     $attendance = base64_decode($_REQUEST['a']);
     $so = base64_decode($_REQUEST['so']);
-    //---------------------------
+
     update_user_meta($userID, 'fsw_roommates', $roommates);
     update_user_meta($userID, 'fsw_house_preference', $house);
     update_user_meta($userID, 'FSW_Dietary_Restrictions', $restriction);
     update_user_meta($userID, 'FSW_AttendanceType', $attendance);
     update_user_meta($userID, 'FSW_SO', $so);
-    //---------------------------
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_FSW_Preferences($userID)
 {
     $html .= '<form method="post">';
@@ -72,7 +70,7 @@ function Get_FSW_Preferences($userID)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 function Get_Roommate_Table($userID)
 {
     $roomates = get_user_meta($userID, 'fsw_roommates', true);
@@ -93,5 +91,5 @@ function Get_Roommate_Table($userID)
 
     return $html;
 }
-//-----------------------------------------------------------------------------------------------------------
+
 ?>
