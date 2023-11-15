@@ -298,7 +298,7 @@ function Get_FSW_StatusMessage($status)
             case "Approved for Daypass - Payment Required":
                 return  "You have been approved to purchase a " . $fsw . " daypass. (https://furryskiweekend.com/shop/)";
             case "Approved - Paid":
-                return "You are approved and paid for " . $fsw . ". We look forward to having you! Please join our private FSW telegram chat: https://t.me/joinchat/BWWi5j_wvUbdApEaZfsSPA";
+                return "You are approved and paid for " . $fsw . ". We look forward to having you! Please join our private FSW telegram chat: https://t.me/+2Em2YQa7VrpjOGVh";
             case "Declined":
                 return "You were not selected for " . $fsw . ". Thank you for applying.";
             case "Not Registered":
