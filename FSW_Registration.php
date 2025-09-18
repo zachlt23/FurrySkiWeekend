@@ -17,6 +17,7 @@ register_uninstall_hook(__FILE__, 'Uninstall_FSW_Registration');
 add_action('admin_menu','FSW_Registration_GenerateMenu');
 add_action('admin_enqueue_scripts', 'FSW_Load_Admin_Settings');
 add_action('wp_enqueue_scripts', 'FSW_Load_Settings');
+add_action('user_register', 'FSW_Add_Custom_User_Meta');
 
 add_shortcode('FSW_Registration', 'FSW_Display_Registration');
 add_shortcode('FSW_Preferences', 'FSW_Display_Preferences');
@@ -85,6 +86,21 @@ function FSW_Registration_GenerateMenu()
 			         'manage_options', //the capability required to access
 			         'FSW_UserInfo', //Unique slug name
 			         'FSW_UserInfo_GeneratePage');
+}
+
+//This adds the custom fields we made with UPME.
+//Since disabling that plugin (it's no longer supported)
+//these fields weren't being added to new users.
+function FSW_Add_Custom_User_Meta($user_id)
+{
+    update_user_meta($user_id,'fsw_status','Not Registered'); //Registration status
+    update_user_meta($user_id,'fsw_roommates',''); //Comma-separated list of user names
+    update_user_meta($user_id,'fsw_house_preference',''); //Single house value
+    update_user_meta($user_id,'FSW_Dietary_Restrictions',''); //Comma-separated list of allergies
+    update_user_meta($user_id,'FSW_SO',''); //The user's significant otter
+    update_user_meta($user_id,'fsw_bed',''); //The bed type the user is assigned to
+    update_user_meta($user_id,'fsw_qsent', false); //Has the questionnaire been sent
+    update_user_meta($user_id,'FSW_AttendanceType','Full Event'); //NEEDS TO BE REMOVED
 }
 
 function FSW_RegistrationManagement_GeneratePage()

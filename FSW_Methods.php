@@ -1,6 +1,6 @@
 <?php
 
-$FSW_Houses = array('None', '1 - Murr Purr Prime (22)', '2 - The Softest Spot (6)', '3 - Far Space Spice Outpost (9)', '4 - Convergence Station Annex (7)', '5 - Only Fire Lives Here (8)', '6 - The House of Screams (5)', '7 - ASB Dorms (6)');
+$FSW_Houses = array('None', '1 - Main (22)', '2 - Fluffy Cache (4)', '3 - Secret Passage (6)', '4 - Convergence Station Annex (6)', '5 - Ground Floor (4)', '6 - Fox Crossing (6)');
 
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 
