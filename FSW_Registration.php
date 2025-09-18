@@ -17,7 +17,7 @@ register_uninstall_hook(__FILE__, 'Uninstall_FSW_Registration');
 add_action('admin_menu','FSW_Registration_GenerateMenu');
 add_action('admin_enqueue_scripts', 'FSW_Load_Admin_Settings');
 add_action('wp_enqueue_scripts', 'FSW_Load_Settings');
-add_action('user_register', 'FSW_Add_Custom_User_Meta');
+add_action('user_register', 'FSW_Add_Custom_User_Meta', 10, 2);
 
 add_shortcode('FSW_Registration', 'FSW_Display_Registration');
 add_shortcode('FSW_Preferences', 'FSW_Display_Preferences');
@@ -91,7 +91,7 @@ function FSW_Registration_GenerateMenu()
 //This adds the custom fields we made with UPME.
 //Since disabling that plugin (it's no longer supported)
 //these fields weren't being added to new users.
-function FSW_Add_Custom_User_Meta($user_id)
+function FSW_Add_Custom_User_Meta($user_id, $userdata)
 {
     update_user_meta($user_id,'fsw_status','Not Registered'); //Registration status
     update_user_meta($user_id,'fsw_roommates',''); //Comma-separated list of user names
