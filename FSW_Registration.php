@@ -3,11 +3,11 @@
 Plugin Name: FSW_Registration
 Plugin URI:
 Description: Uses an internally defined status to either show a message or a button to send an email request for registration
-Version: 1.0.0.0
+Version: 2.0.0.0
 Author: Zach Thompson
 Author URI: 
 License: GPLv2
-Copyright 2018 Zach Thompson (email: zachlt23@gmail.com)
+Copyright 2025 Zach Thompson (email: zachlt23@gmail.com)
 */
 
 register_activation_hook(__FILE__, 'Activate_FSW_Registration');
@@ -17,7 +17,7 @@ register_uninstall_hook(__FILE__, 'Uninstall_FSW_Registration');
 add_action('admin_menu','FSW_Registration_GenerateMenu');
 add_action('admin_enqueue_scripts', 'FSW_Load_Admin_Settings');
 add_action('wp_enqueue_scripts', 'FSW_Load_Settings');
-add_action('user_register', 'FSW_Add_Custom_User_Meta', 10, 2);
+add_action('user_register', 'FSW_Add_Custom_User_Meta');
 
 add_shortcode('FSW_Registration', 'FSW_Display_Registration');
 add_shortcode('FSW_Preferences', 'FSW_Display_Preferences');
@@ -91,7 +91,7 @@ function FSW_Registration_GenerateMenu()
 //This adds the custom fields we made with UPME.
 //Since disabling that plugin (it's no longer supported)
 //these fields weren't being added to new users.
-function FSW_Add_Custom_User_Meta($user_id, $userdata)
+function FSW_Add_Custom_User_Meta($user_id)
 {
     update_user_meta($user_id,'fsw_status','Not Registered'); //Registration status
     update_user_meta($user_id,'fsw_roommates',''); //Comma-separated list of user names
