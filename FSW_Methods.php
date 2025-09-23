@@ -187,11 +187,9 @@ function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
 
 function Get_SO_Select($userID)
 {
-    $filter = array('fields' => array('display_name'));
-
     $values = array('none');
     
-    foreach(get_users($filter) as $user)
+    foreach(Get_AttendingUsers() as $user)
     {
         array_push($values, $user->display_name);
     }
