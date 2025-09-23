@@ -71,7 +71,7 @@ function FSW_Registration_GenerateMenu()
 		             'Mass Email', //Menu Title
 			         'manage_options', //the capability required to access
 			         'FSW_Mass_Email', //Unique slug name
-                    'FSW_Mass_Email_GeneratePage');
+                     'FSW_Mass_Email_GeneratePage');
 
 	add_submenu_page('FSW_Registration_Console', //parent menu slug name
 			         'Tools', //Page Title
@@ -100,7 +100,6 @@ function FSW_Add_Custom_User_Meta($user_id)
     update_user_meta($user_id,'FSW_SO',''); //The user's significant otter
     update_user_meta($user_id,'fsw_bed',''); //The bed type the user is assigned to
     update_user_meta($user_id,'fsw_qsent', false); //Has the questionnaire been sent
-    update_user_meta($user_id,'FSW_AttendanceType','Full Event'); //NEEDS TO BE REMOVED
 }
 
 function FSW_RegistrationManagement_GeneratePage()
@@ -108,7 +107,6 @@ function FSW_RegistrationManagement_GeneratePage()
 	echo Get_FSW_Pending_Table();
 	echo Get_FSW_Waitlist_Table();
 	echo Get_FSW_Approved_Table();
-    echo Get_FSW_Approved_Daypass_Table();
 	echo Get_FSW_Paid_Table();
 	echo Get_FSW_Refund_Table();
 }

@@ -36,13 +36,6 @@ function Get_FSW_Preferences($userID)
     $html .= '</div>';
     $html .= '<br>';
 
-    $html .= '<div id="attendance_div">';
-    $html .= 'Attendance Type:';
-    $html .= '<br>';
-    $html .= Get_Attendance_Select($userID);
-    $html .= '</div>';
-    $html .= '<br>';
-
     $html .= '<div id="significantOtter_div">';
     $html .= 'Significant Otter:';
     $html .= '<br>';

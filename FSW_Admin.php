@@ -62,7 +62,6 @@ function Get_FSW_Pending_Table()
     $html .= '<th>Display Name</th>';
     $html .= '<th>Email</th>';
     $html .= '<th>Approve</th>';
-    $html .= '<th>Approve Daypass</th>';
     $html .= '<th>Waitlist</th>';
     $html .= '<th>Decline</th>';
     $html .= '<th>Send Questionnaire</th>';
@@ -70,29 +69,6 @@ function Get_FSW_Pending_Table()
     $html .= Build_FSW_Users($status, $role, 'p');
     $html .= '</table>';
     $html .= Get_FSW_Table_Input('p');
-    $html .= '</form>';
-
-    return $html;
-}
-
-function Get_FSW_Approved_Daypass_Table()
-{
-    $status = 'Approved for Daypass - Payment Required';
-    $role = 'customer';
-    $count = Get_FSW_Status_Count($status, $role);
-
-    $html .= '<form class="approved" method="post">';
-    $html .= '<table class="FSW_Users">';
-    $html .= "<caption>Approved for Daypass Users - $count</caption>";
-    $html .= '<tr>';
-    $html .= '<th>Display Name</th>';
-    $html .= '<th>Email</th>';
-    $html .= '<th>Paid</th>';
-    $html .= '<th>Waitlist</th>';
-    $html .= '</tr>';
-    $html .= Build_FSW_Users($status, $role, 'ad');
-    $html .= '</table>';
-    $html .= Get_FSW_Table_Input('ad');
     $html .= '</form>';
 
     return $html;
@@ -246,7 +222,6 @@ function Get_FSW_User_Buttons($buttonType, $userID, $displayName, $email)
 function Get_FSW_Pending_Buttons($parameters, $userID)
 {
     $html .= Get_FSW_Status_Button('Approve', $parameters);
-    $html .= Get_FSW_Status_Button('ApproveDayPass', $parameters);
     $html .= Get_FSW_Status_Button('Waitlist', $parameters);
     $html .= Get_FSW_Status_Button('Decline', $parameters);
 
@@ -367,11 +342,10 @@ function Send_Questionnaire()
 
 function Send_FSW_Verification()
 {
-    //-----------------------------------------------------------------------------------------------------------
     $registrant = explode("|",$_REQUEST['new_registrant']);
     $verifier = explode("|",$_REQUEST['verifier']);
     $name = $registrant[0];
-    //-----------------------------------------------------------------------------------------------------------
+
     $to = $verifier[1];
     $subject = "$verifier[0], can you vouch for $name";
     $message = "
@@ -435,10 +409,6 @@ function Update_FSW_Status()
     {
         case "Approve":
                 update_user_meta($userID, 'fsw_status', 'Approved - Payment Required');
-                Change_Role($userID,'customer');
-                break;
-        case "ApproveDayPass":
-                update_user_meta($userID, 'fsw_status', 'Approved for Daypass - Payment Required');
                 Change_Role($userID,'customer');
                 break;
         case "Waitlist":

@@ -1,12 +1,15 @@
 <?php
 
+//-----------
+//GLOBALS
+//EX: $GLOBALS['FSW_Houses']
+//-----------
+
 $FSW_Houses = array('None', '1 - Main (22)', '2 - Fluffy Cache (4)', '3 - Secret Passage (6)', '4 - Convergence Station Annex (6)', '5 - Ground Floor (4)', '6 - Fox Crossing (6)');
 
 $FSW_Beds = array('None', 'King', 'Queen', 'Twin', 'Bunk', 'Sleeper', 'Single', 'Double');
 
 $FSW_Airlines = array('', 'Air Canada', 'Alaskan', 'American', 'Delta', 'Frontier', 'Jet Blue', 'Other', 'Southwest', 'Spirit', 'United', 'Virgin', 'West Jet');
-
-$FSW_AttendanceTypes = array('Full Event', "Daypass");
 
 $FSW_DietaryRestrictions = array('None','Allergy - Dairy','Allergy - Eggs','Allergy - Fish','Allergy - Gluten','Allergy - Peanuts','Allergy - Shellfish','Allergy - Soy','Allergy - Tree Nuts','Allergy - Other',
     'Restriction - Kosher','Restriction - Pescatarian','Restriction - Vegetarian','Restriction - Keto','Restriction - Vegan');
@@ -134,12 +137,6 @@ function Get_Airline_Select($userID)
     return Get_FSW_Select($GLOBALS['FSW_Airlines'], $airline, 'travel_airline_select', 'airline');
 }
 
-function Get_Attendance_Select($userID)
-{
-    $attendance = get_user_meta($userID, 'FSW_AttendanceType', true);
-    return Get_FSW_Select($GLOBALS['FSW_AttendanceTypes'], $attendance, 'attendance_select', 'attendance');
-}
-
 function Get_Beds_Select($userID)
 {
     $id = 'select_bed_' . $userID;
@@ -160,12 +157,14 @@ function Get_Roommates_Select($userID)
 
     $html .= '<select id="' . $id .'">';
     $html .= '<option value="None">None</option>';
+    
     foreach(get_users($filter) as $user)
     {
         $displayName = $user->display_name;
         $selected = ($roommate == $displayName) ? "selected" : "";
         $html .= '<option value="' . $displayName . '" ' . $selected . '>' . $displayName . '</option>';
     }
+    
     $html .= '</select>';
 
     return $html;
@@ -182,6 +181,7 @@ function Get_FSW_Select($values, $currentValue, $id, $name, $disabled = false)
     }
 
     $html .= '</select>';
+    
     return $html;
 }
 
@@ -197,6 +197,7 @@ function Get_SO_Select($userID)
     }
     
     $so = get_user_meta($userID, 'FSW_SO', true);
+    
     return Get_FSW_Select($values, $so, "select_so", "significantOtter");
 }
 
@@ -295,8 +296,6 @@ function Get_FSW_StatusMessage($status)
                     . "<br>- FSW Staff";
             case "Approved - Payment Required":
                 return "You have been approved for " . $fsw . ". You have four weeks to complete your paymet to secure your spot. (https://furryskiweekend.com/shop/)";
-            case "Approved for Daypass - Payment Required":
-                return  "You have been approved to purchase a " . $fsw . " daypass. (https://furryskiweekend.com/shop/)";
             case "Approved - Paid":
                 return "You are approved and paid for " . $fsw . ". We look forward to having you! Please join our private FSW telegram chat: https://t.me/+2Em2YQa7VrpjOGVh";
             case "Declined":
